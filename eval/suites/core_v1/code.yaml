@@ -1,0 +1,129 @@
+name: code
+version: core_v1
+description: Implement small Python functions; pytest tests are the gold standard.
+examples:
+  - id: code-1
+    input: |
+      def add(a: int, b: int) -> int:
+          """Return a + b."""
+    gold:
+      function_name: add
+      tests: |
+        def test_basic():
+            assert add(1, 2) == 3
+            assert add(0, 0) == 0
+            assert add(-1, 1) == 0
+        def test_neg():
+            assert add(-5, -7) == -12
+  - id: code-2
+    input: |
+      def is_even(n: int) -> bool:
+          """Return True if n is even."""
+    gold:
+      function_name: is_even
+      tests: |
+        def test_even():
+            assert is_even(0) is True
+            assert is_even(2) is True
+            assert is_even(4) is True
+        def test_odd():
+            assert is_even(1) is False
+            assert is_even(7) is False
+  - id: code-3
+    input: |
+      def reverse_string(s: str) -> str:
+          """Return s reversed."""
+    gold:
+      function_name: reverse_string
+      tests: |
+        def test_basic():
+            assert reverse_string("abc") == "cba"
+            assert reverse_string("") == ""
+            assert reverse_string("a") == "a"
+        def test_palindrome():
+            assert reverse_string("level") == "level"
+  - id: code-4
+    input: |
+      def factorial(n: int) -> int:
+          """Return n! for n >= 0."""
+    gold:
+      function_name: factorial
+      tests: |
+        def test_small():
+            assert factorial(0) == 1
+            assert factorial(1) == 1
+            assert factorial(5) == 120
+        def test_larger():
+            assert factorial(7) == 5040
+  - id: code-5
+    input: |
+      def max_of_list(xs: list[int]) -> int:
+          """Return the maximum value of xs."""
+    gold:
+      function_name: max_of_list
+      tests: |
+        def test_basic():
+            assert max_of_list([1, 2, 3]) == 3
+            assert max_of_list([-1, -2, -3]) == -1
+            assert max_of_list([42]) == 42
+  - id: code-6
+    input: |
+      def fib(n: int) -> int:
+          """Return the n-th Fibonacci number; fib(0)=0, fib(1)=1."""
+    gold:
+      function_name: fib
+      tests: |
+        def test_base():
+            assert fib(0) == 0
+            assert fib(1) == 1
+        def test_recurrence():
+            assert fib(2) == 1
+            assert fib(5) == 5
+            assert fib(10) == 55
+  - id: code-7
+    input: |
+      def count_vowels(s: str) -> int:
+          """Count a/e/i/o/u (case-insensitive) in s."""
+    gold:
+      function_name: count_vowels
+      tests: |
+        def test_basic():
+            assert count_vowels("hello") == 2
+            assert count_vowels("AEIOU") == 5
+            assert count_vowels("xyz") == 0
+            assert count_vowels("") == 0
+  - id: code-8
+    input: |
+      def is_palindrome(s: str) -> bool:
+          """Return True if s reads the same forwards and backwards (case-insensitive)."""
+    gold:
+      function_name: is_palindrome
+      tests: |
+        def test_basic():
+            assert is_palindrome("level") is True
+            assert is_palindrome("Racecar") is True
+            assert is_palindrome("hello") is False
+            assert is_palindrome("") is True
+  - id: code-9
+    input: |
+      def gcd(a: int, b: int) -> int:
+          """Return the greatest common divisor of a and b."""
+    gold:
+      function_name: gcd
+      tests: |
+        def test_basic():
+            assert gcd(12, 8) == 4
+            assert gcd(100, 75) == 25
+            assert gcd(7, 7) == 7
+            assert gcd(13, 1) == 1
+  - id: code-10
+    input: |
+      def flatten(xs: list) -> list:
+          """Flatten a list one level deep, preserving order."""
+    gold:
+      function_name: flatten
+      tests: |
+        def test_basic():
+            assert flatten([[1, 2], [3, 4]]) == [1, 2, 3, 4]
+            assert flatten([[], [1]]) == [1]
+            assert flatten([]) == []

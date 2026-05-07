@@ -1,0 +1,147 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  EVAL_OBS_OTEL_EXPORTER: memory
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install ruff==0.6.8 black==24.8.0
+      - run: ruff check src tests
+      - run: black --check src tests
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install poetry==1.8.3
+      - run: poetry install --with dev
+      - run: poetry run mypy
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12"]
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: evalobs
+          POSTGRES_PASSWORD: evalobs
+          POSTGRES_DB: evalobs
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U evalobs"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      EVAL_OBS_DATABASE_URL: "postgresql+psycopg://evalobs:evalobs@localhost:5432/evalobs"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ matrix.python }}" }
+      - run: pip install poetry==1.8.3
+      - run: poetry install --with dev
+      - run: poetry run alembic upgrade head
+      - run: poetry run pytest tests/unit tests/trace -v
+      - name: integration
+        env:
+          RUN_INTEGRATION: "1"
+        run: poetry run pytest tests/integration -v
+
+  eval-smoke:
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install poetry==1.8.3
+      - run: poetry install --with dev
+      - name: init schema (sqlite)
+        run: poetry run python -m eval_observability.cli init
+      - name: full suite vs committed baseline
+        run: poetry run eval-obs run --suite core_v1 --provider fake --model fake-large --smoke
+
+  cron-smoke:
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install poetry==1.8.3
+      - run: poetry install --with dev
+      - name: init schema
+        run: poetry run python -m eval_observability.cli init
+      - name: seed two windows of data and run cron
+        run: |
+          poetry run python <<'PY'
+          from datetime import UTC, datetime, timedelta
+          from pathlib import Path
+          from eval_observability.db import session_scope, create_all
+          from eval_observability.providers.fake import FakeProvider
+          from eval_observability.runner import run_suite
+          from eval_observability.regression.cron import generate_daily_report
+          from eval_observability.models import Run, RunItem, Suite
+          from eval_observability.obs.otel import configure_tracing
+          from eval_observability.settings import Settings
+
+          configure_tracing(exporter="memory")
+          create_all()
+          with session_scope() as s:
+              run_suite(s, suite_root=Path("eval/suites/core_v1"), suite_name="core_v1",
+                        suite_version="core_v1", provider=FakeProvider(), model="fake-large")
+          with session_scope() as s:
+              suite = s.query(Suite).first()
+              base = datetime.now(UTC) - timedelta(days=10)
+              for d in range(0, 6):
+                  run = Run(suite_id=suite.id, model_version="fake-large",
+                            started_at=base - timedelta(days=d),
+                            finished_at=base - timedelta(days=d) + timedelta(seconds=10),
+                            status="completed", otel_trace_id="0"*32)
+                  s.add(run); s.flush()
+                  for cat, prior in [("extraction", 0.99), ("summarization", 0.62)]:
+                      for i in range(8):
+                          s.add(RunItem(run_id=run.id, category=cat,
+                                        example_id=f"{cat}-prior-{d}-{i}",
+                                        score=prior, passed=True, latency_ms=1.0,
+                                        cost_usd=0.0, status="ok"))
+          settings = Settings(reports_dir=Path("/tmp/cron-smoke-reports"))
+          with session_scope() as s:
+              rep = generate_daily_report(s, suite_name="core_v1", suite_version="core_v1",
+                                          model_version="fake-large", settings=settings)
+              assert rep.summary["flagged_count"] >= 1, rep.summary
+              print(f"OK: report id={rep.id}, flagged={rep.summary['flagged_count']}")
+              print(Path(rep.file_path).read_text())
+          PY
+
+  build-image:
+    runs-on: ubuntu-latest
+    needs: [test, eval-smoke, cron-smoke]
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: build (no push)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          tags: ghcr.io/say-5/eval-observability:ci

@@ -1,0 +1,34 @@
+name: summarization
+version: core_v1
+description: One-to-two sentence summaries of short passages.
+examples:
+  - id: summarization-1
+    input: "Photosynthesis is the process by which green plants and some bacteria use sunlight to convert carbon dioxide and water into glucose, releasing oxygen as a byproduct. The reaction occurs primarily in the chloroplasts of leaf cells and is the foundation of most food chains."
+    gold: "Photosynthesis converts sunlight, water, and CO2 into glucose and oxygen, primarily in chloroplasts of green plants."
+  - id: summarization-2
+    input: "Mitochondria are organelles found in most eukaryotic cells where cellular respiration takes place. They generate the bulk of a cell's supply of adenosine triphosphate, ATP, used as a source of chemical energy."
+    gold: "Mitochondria are organelles that produce ATP via cellular respiration in eukaryotic cells."
+  - id: summarization-3
+    input: "DNA is a polymer composed of two long polynucleotide chains coiled around each other to form a double helix. The sequence of the four nucleotide bases, A, T, G, and C, encodes genetic information used to direct cellular activities."
+    gold: "DNA is a double-helix polymer whose four nucleotide bases encode genetic information."
+  - id: summarization-4
+    input: "Plate tectonics is the scientific theory that Earth's lithosphere is divided into a number of large plates that move relative to one another, driven in part by convection in the underlying mantle. The interactions of these plates produce earthquakes, volcanism, and mountain building."
+    gold: "Plate tectonics describes how Earth's lithospheric plates move and interact, producing earthquakes, volcanism, and mountains."
+  - id: summarization-5
+    input: "The water cycle describes the continuous movement of water on, above, and below the Earth's surface. Water evaporates from oceans and lakes, condenses into clouds, and returns to the surface as precipitation, where it flows or infiltrates back to the sea."
+    gold: "The water cycle is water's continuous movement through evaporation, condensation, and precipitation."
+  - id: summarization-6
+    input: "The Industrial Revolution began in Britain in the late eighteenth century and was characterized by the transition from hand production methods to machines, new chemical manufacturing and iron production processes, and the rise of the factory system."
+    gold: "The Industrial Revolution was a late-eighteenth-century shift from handcraft to mechanized factory production that began in Britain."
+  - id: summarization-7
+    input: "Newton's three laws of motion describe the relationship between a body and the forces acting upon it, and the body's motion in response to those forces. They are foundational to classical mechanics and explain phenomena such as inertia, acceleration, and reaction forces."
+    gold: "Newton's three laws of motion relate forces to a body's motion and underpin classical mechanics."
+  - id: summarization-8
+    input: "Evolution by natural selection is the process by which heritable traits become more or less common in a population over successive generations, driven by differential reproduction. It is one of the cornerstones of modern biology, first articulated by Charles Darwin and Alfred Russel Wallace."
+    gold: "Natural selection makes heritable traits more or less common in populations through differential reproduction."
+  - id: summarization-9
+    input: "Antibiotics are medications used to treat bacterial infections by either killing the bacteria or stopping their reproduction. They work by targeting structures or processes specific to bacterial cells, such as cell walls or protein synthesis machinery, with limited effect on host cells."
+    gold: "Antibiotics treat bacterial infections by targeting bacteria-specific structures while sparing host cells."
+  - id: summarization-10
+    input: "A black hole is a region of spacetime where gravity is so strong that nothing — no particles or even electromagnetic radiation such as light — can escape from it. The boundary of the region from which no escape is possible is called the event horizon."
+    gold: "A black hole is a spacetime region with gravity so strong that not even light escapes; its boundary is the event horizon."

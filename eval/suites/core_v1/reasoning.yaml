@@ -1,0 +1,54 @@
+name: reasoning
+version: core_v1
+description: Multi-step arithmetic word problems; final answer required.
+examples:
+  - id: reasoning-1
+    input: "Multiply twelve by four, then add seven. What do you get?"
+    gold:
+      answer: "55"
+      expected_steps: 2
+  - id: reasoning-2
+    input: "Subtract 37 from 100, then divide the result by 9."
+    gold:
+      answer: "7"
+      expected_steps: 2
+  - id: reasoning-3
+    input: "What is five to the power of three?"
+    gold:
+      answer: "125"
+      expected_steps: 1
+  - id: reasoning-4
+    input: "Three trains leave a station every 12 minutes. How many trains in two hours?"
+    gold:
+      answer: "10"
+      expected_steps: 2
+  - id: reasoning-5
+    input: "Add 8 and 12, then triple the result."
+    gold:
+      answer: "60"
+      expected_steps: 2
+  - id: reasoning-6
+    input: "If 144 cookies are split evenly into 12 boxes, how many per box?"
+    gold:
+      answer: "12"
+      expected_steps: 1
+  - id: reasoning-7
+    input: "Seven groups of eight — what is the total?"
+    gold:
+      answer: "56"
+      expected_steps: 1
+  - id: reasoning-8
+    input: "What is the square of 25?"
+    gold:
+      answer: "625"
+      expected_steps: 1
+  - id: reasoning-9
+    input: "From 1000, subtract 250, then divide by 5."
+    gold:
+      answer: "150"
+      expected_steps: 2
+  - id: reasoning-10
+    input: "Compute nine times nine, then add nineteen."
+    gold:
+      answer: "100"
+      expected_steps: 2

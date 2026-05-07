@@ -1,0 +1,35 @@
+name: classification
+version: core_v1
+description: Sentiment classification over short reviews.
+labels: ["positive", "negative", "neutral"]
+examples:
+  - id: classification-1
+    input: "Absolutely loved every minute. Best service I've had in years."
+    gold: positive
+  - id: classification-2
+    input: "Terrible experience, the food was cold and the staff rude."
+    gold: negative
+  - id: classification-3
+    input: "It was fine. Nothing memorable, but nothing wrong either."
+    gold: neutral
+  - id: classification-4
+    input: "This is fantastic value, I'll be coming back."
+    gold: positive
+  - id: classification-5
+    input: "I would not recommend this to anyone."
+    gold: negative
+  - id: classification-6
+    input: "The weather here is mild today."
+    gold: neutral
+  - id: classification-7
+    input: "Worst purchase of the year — broken on arrival."
+    gold: negative
+  - id: classification-8
+    input: "An average product. Does what it says."
+    gold: neutral
+  - id: classification-9
+    input: "Exceeded expectations on every front."
+    gold: positive
+  - id: classification-10
+    input: "Disappointing follow-up to a once-great series."
+    gold: negative

@@ -1,0 +1,70 @@
+name: instruction_following
+version: core_v1
+description: Multi-constraint instructions; structural assertions on the JSON output.
+examples:
+  - id: instruction_following-1
+    input: "Reply with a JSON object having keys A (string), B (string with exactly 3 sentences), and C (integer)."
+    gold:
+      json_only: true
+      required_keys: ["A", "B", "C"]
+      sentence_count: { "B": 3 }
+      value_types: { "A": "str", "C": "int" }
+  - id: instruction_following-2
+    input: "Reply with JSON keys A, B, C only. B must contain exactly 3 sentences. C must be an integer."
+    gold:
+      json_only: true
+      required_keys: ["A", "B", "C"]
+      sentence_count: { "B": 3 }
+      value_types: { "C": "int" }
+  - id: instruction_following-3
+    input: "Output strictly JSON: {A: string, B: 3-sentence string, C: integer}."
+    gold:
+      json_only: true
+      required_keys: ["A", "B", "C"]
+      sentence_count: { "B": 3 }
+      value_types: { "C": "int" }
+  - id: instruction_following-4
+    input: "Provide a JSON object with the keys A, B, and C. B should have exactly three sentences."
+    gold:
+      json_only: true
+      required_keys: ["A", "B", "C"]
+      sentence_count: { "B": 3 }
+  - id: instruction_following-5
+    input: "JSON only. Keys: A, B, C. B is a 3-sentence string. C is an integer."
+    gold:
+      json_only: true
+      required_keys: ["A", "B", "C"]
+      sentence_count: { "B": 3 }
+      value_types: { "C": "int" }
+  - id: instruction_following-6
+    input: "Return a JSON object with keys A, B, and C. Field B must be exactly three sentences long."
+    gold:
+      json_only: true
+      required_keys: ["A", "B", "C"]
+      sentence_count: { "B": 3 }
+  - id: instruction_following-7
+    input: "JSON only. Required keys: A, B, C. B is three sentences. C is an integer."
+    gold:
+      json_only: true
+      required_keys: ["A", "B", "C"]
+      sentence_count: { "B": 3 }
+      value_types: { "C": "int" }
+  - id: instruction_following-8
+    input: "Output a JSON object {A, B, C}. B = three sentences."
+    gold:
+      json_only: true
+      required_keys: ["A", "B", "C"]
+      sentence_count: { "B": 3 }
+  - id: instruction_following-9
+    input: "Reply with JSON. Keys A, B, C. B has three sentences. C is an int."
+    gold:
+      json_only: true
+      required_keys: ["A", "B", "C"]
+      sentence_count: { "B": 3 }
+      value_types: { "C": "int" }
+  - id: instruction_following-10
+    input: "JSON only. Keys A, B, C. B contains exactly three sentences."
+    gold:
+      json_only: true
+      required_keys: ["A", "B", "C"]
+      sentence_count: { "B": 3 }

@@ -1,0 +1,37 @@
+{
+  "model": "fake-large",
+  "per_category": {
+    "classification": {
+      "mean_score": 0.8,
+      "n": 10.0,
+      "pass_rate": 0.8
+    },
+    "code": {
+      "mean_score": 0.8,
+      "n": 10.0,
+      "pass_rate": 0.8
+    },
+    "extraction": {
+      "mean_score": 0.9457142857142857,
+      "n": 10.0,
+      "pass_rate": 0.7
+    },
+    "instruction_following": {
+      "mean_score": 0.96,
+      "n": 10.0,
+      "pass_rate": 0.8
+    },
+    "reasoning": {
+      "mean_score": 0.9,
+      "n": 10.0,
+      "pass_rate": 0.9
+    },
+    "summarization": {
+      "mean_score": 0.39248043797648674,
+      "n": 10.0,
+      "pass_rate": 0.3
+    }
+  },
+  "total_examples": 60,
+  "total_passed": 43
+}

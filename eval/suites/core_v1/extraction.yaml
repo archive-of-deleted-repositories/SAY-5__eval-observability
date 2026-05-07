@@ -1,0 +1,44 @@
+name: extraction
+version: core_v1
+description: Extract named entities from short passages.
+examples:
+  - id: extraction-1
+    input: "The Eiffel Tower stands in Paris, the capital of France."
+    gold:
+      entities: ["Eiffel Tower", "Paris", "France"]
+  - id: extraction-2
+    input: "Apollo 11 carried Neil Armstrong and Buzz Aldrin to the Moon in 1969."
+    gold:
+      entities: ["Apollo 11", "Neil Armstrong", "Buzz Aldrin", "Moon"]
+  - id: extraction-3
+    input: "Marie Curie discovered radium and polonium in the late nineteenth century."
+    gold:
+      entities: ["Marie Curie", "radium", "polonium"]
+  - id: extraction-4
+    input: "Mount Everest sits on the border between Nepal and Tibet."
+    gold:
+      entities: ["Mount Everest", "Nepal", "Tibet"]
+  - id: extraction-5
+    input: "Carbon allotropes include graphite and diamond."
+    gold:
+      entities: ["carbon", "graphite", "diamond"]
+  - id: extraction-6
+    input: "Earth has five oceans: Pacific, Atlantic, Indian, Arctic, and Southern."
+    gold:
+      entities: ["Pacific", "Atlantic", "Indian", "Arctic", "Southern"]
+  - id: extraction-7
+    input: "Shakespeare wrote Hamlet, Macbeth, and Othello."
+    gold:
+      entities: ["Shakespeare", "Hamlet", "Macbeth", "Othello"]
+  - id: extraction-8
+    input: "Pluto and its moon Charon orbit beyond Neptune."
+    gold:
+      entities: ["Pluto", "Charon", "Neptune"]
+  - id: extraction-9
+    input: "Saturn is famed for its rings and its largest moon Titan."
+    gold:
+      entities: ["Saturn", "rings", "Titan"]
+  - id: extraction-10
+    input: "Einstein won the Nobel for the photoelectric effect, not relativity."
+    gold:
+      entities: ["Einstein", "relativity", "photoelectric"]
