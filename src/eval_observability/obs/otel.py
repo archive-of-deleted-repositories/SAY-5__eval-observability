@@ -76,9 +76,7 @@ def configure_tracing(
     elif exporter == "stdout":
         proc = SimpleSpanProcessor(ConsoleSpanExporter())
     elif exporter == "otlp":
-        from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (  # type: ignore[import-not-found]  # noqa: E501
-            OTLPSpanExporter,
-        )
+        from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
 
         proc = BatchSpanProcessor(OTLPSpanExporter(endpoint=otlp_endpoint))
     else:

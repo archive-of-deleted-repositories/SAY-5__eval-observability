@@ -61,7 +61,7 @@ def check_instruction(prediction: str, constraints: dict[str, Any]) -> dict[str,
             ok = (
                 (type_name == "int" and isinstance(value, int) and not isinstance(value, bool))
                 or (type_name == "str" and isinstance(value, str))
-                or (type_name == "float" and isinstance(value, (int, float)))
+                or (type_name == "float" and isinstance(value, int | float))
             )
             checks.append((f"type:{field}={type_name}", bool(ok)))
 
