@@ -157,12 +157,6 @@ jobs:
         with: { python-version: "3.12" }
       - run: pip install poetry==1.8.3
       - run: poetry install --with dev
-      - name: prepare collector data dir
-        run: |
-          mkdir -p infra/collector-data
-          # collector runs as a non-root user; relax perms so the file
-          # exporter can write spans.jsonl.
-          chmod 0777 infra/collector-data
       - name: spin otel-collector + jaeger
         run: docker compose up -d otel-collector jaeger
       - name: wait for collector to bind 4317

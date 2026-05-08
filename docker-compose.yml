@@ -16,13 +16,15 @@ services:
       retries: 10
 
   otel-collector:
-    # ``contrib`` distribution ships the file exporter we use to introspect
-    # spans from CI. The vanilla ``opentelemetry-collector`` does not.
+    # ``contrib`` distribution ships extra exporters and the same ``debug``
+    # exporter the CI ``otel-smoke`` job greps for in stdout. The vanilla
+    # ``opentelemetry-collector`` would also work for the smoke path; we
+    # default to the contrib image because it's what most production
+    # platforms run.
     image: otel/opentelemetry-collector-contrib:0.107.0
     command: ["--config=/etc/otel-collector-config.yaml"]
     volumes:
       - ./infra/otel-collector-config.yaml:/etc/otel-collector-config.yaml:ro
-      - ./infra/collector-data:/data
     ports:
       - "4317:4317"
       - "4318:4318"

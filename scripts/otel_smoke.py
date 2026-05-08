@@ -1,4 +1,4 @@
-"""``otel-smoke`` integration: live OTLP exporter -> otel-collector -> file.
+"""``otel-smoke`` integration: live OTLP exporter -> otel-collector -> stdout.
 
 This script is the body of the CI ``otel-smoke`` job. It assumes the
 ``otel-collector`` container is already up (the job spins it via
@@ -11,17 +11,19 @@ The script:
      (one category, two examples) so the collector receives a real-shaped
      span tree.
   2. Forces a flush via the ``BatchSpanProcessor`` shutdown so all spans
-     reach the collector before we read its file dump.
-  3. Reads ``infra/collector-data/spans.jsonl``, parses the span names, and
-     asserts the expected hierarchy (1 suite_run + 1 category_run + N
-     example_run + N llm_call + N score).
+     reach the collector before we read its stdout.
+  3. Pulls the collector's stdout via ``docker compose logs otel-collector``,
+     greps for the ``Name :`` lines emitted by the ``debug`` exporter at
+     ``verbosity: detailed``, and asserts the expected hierarchy
+     (1 suite_run + 1 category_run + N example_run + N llm_call + N score).
 
 Exits 0 on success and prints the parsed span tree.
 """
 
 from __future__ import annotations
 
-import json
+import re
+import subprocess
 import sys
 import time
 from collections import Counter
@@ -34,15 +36,19 @@ from eval_observability.runner import run_suite
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SUITE_PATH = REPO_ROOT / "eval" / "suites" / "core_v1"
-SPANS_FILE = REPO_ROOT / "infra" / "collector-data" / "spans.jsonl"
 
 N_EXAMPLES = 2  # Per category. Smoke job only exercises one category to stay fast.
 CATEGORY = "extraction"
+COLLECTOR_SERVICE = "otel-collector"
+
+# The ``debug`` exporter at ``verbosity: detailed`` emits one section per span,
+# starting with a line of the form: ``Span #N`` followed by ``    Name        : llm_call``
+_NAME_RE = re.compile(r"Name\s*:\s*(\w+)")
 
 
 def _flush_processors() -> None:
     """Force-flush every attached span processor and shut them down so the
-    collector sees the spans before we sample the file.
+    collector sees the spans before we sample its stdout.
     """
     for proc in _processors:
         try:
@@ -55,39 +61,37 @@ def _flush_processors() -> None:
             pass
 
 
-def _read_collector_spans(timeout_s: float = 30.0) -> list[dict]:
-    """Poll the collector's file dump until the expected span count appears or
-    we time out.
+def _collector_logs() -> str:
+    out = subprocess.run(  # noqa: S603,S607
+        ["docker", "compose", "logs", "--no-color", COLLECTOR_SERVICE],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=30,
+    )
+    return out.stdout
+
+
+def _read_collector_span_names(timeout_s: float = 30.0) -> list[str]:
+    """Poll the collector's stdout (via ``docker compose logs``) until the
+    expected span count appears or we time out.
     """
     expected_total = 1 + 1 + N_EXAMPLES * 3  # suite + category + (example, llm_call, score)
     deadline = time.time() + timeout_s
     while time.time() < deadline:
-        if SPANS_FILE.exists():
-            lines = SPANS_FILE.read_text().splitlines()
-            spans: list[dict] = []
-            for raw_line in lines:
-                line = raw_line.strip()
-                if not line:
-                    continue
-                doc = json.loads(line)
-                # Each line is a ResourceSpans payload; flatten to the leaves.
-                for rs in doc.get("resourceSpans", []):
-                    for ss in rs.get("scopeSpans", []):
-                        spans.extend(ss.get("spans", []))
-            if len(spans) >= expected_total:
-                return spans
+        text = _collector_logs()
+        names = _NAME_RE.findall(text)
+        if len(names) >= expected_total:
+            return names
         time.sleep(1.0)
     raise TimeoutError(
-        f"otel-smoke: collector did not produce >= {expected_total} spans "
-        f"within {timeout_s:.0f}s (file={SPANS_FILE})"
+        f"otel-smoke: collector stdout did not contain >= {expected_total} "
+        f"`Name : ...` lines within {timeout_s:.0f}s"
     )
 
 
 def main() -> int:
-    # Wipe any previous collector dump so we don't see stale spans.
-    if SPANS_FILE.exists():
-        SPANS_FILE.unlink()
-
     configure_tracing(exporter="otlp", otlp_endpoint="http://localhost:4317")
     create_all()
     with session_scope() as session:
@@ -103,10 +107,10 @@ def main() -> int:
         )
 
     _flush_processors()
-    spans = _read_collector_spans()
+    names = _read_collector_span_names()
 
-    counts = Counter(s.get("name") for s in spans)
-    print("collector span tree:")
+    counts = Counter(names)
+    print("collector span tree (from `docker compose logs otel-collector`):")
     for name in ("suite_run", "category_run", "example_run", "llm_call", "score"):
         print(f"  {name:<14} {counts.get(name, 0)}")
 

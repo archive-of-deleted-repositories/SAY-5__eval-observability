@@ -90,23 +90,23 @@ Tempo  /  Jaeger                             (whichever your platform runs)
 
 Three things to know about the collector:
 
-1. The collector image must be **`otel/opentelemetry-collector-contrib`**, not the vanilla `otel/opentelemetry-collector`. The `file` exporter we use to introspect spans from the `otel-smoke` CI job lives in the contrib distribution. Production stacks that don't introspect file dumps can use either image.
-2. The provided `infra/otel-collector-config.yaml` is intentionally minimal — `receivers: [otlp]`, `processors: [batch]`, `exporters: [otlp/jaeger, debug, file]`. Swap `otlp/jaeger` for `otlp/tempo` or any other OTLP-compatible backend when wiring to your platform.
-3. `BatchSpanProcessor` queues spans before flushing; tests and short-lived processes must call `proc.force_flush()` (or rely on `provider.shutdown()`) before reading the collector's output. The CI `otel-smoke` job calls `force_flush(timeout_millis=5000)` on every attached processor and then polls `infra/collector-data/spans.jsonl` until the expected span count appears.
+1. The default image is `otel/opentelemetry-collector-contrib` so the same Compose file works for production stacks that need extra exporters (Tempo, Loki, OTLP/HTTP variants). The vanilla `otel/opentelemetry-collector` works equally well for the simple OTLP-in-debug-out smoke path.
+2. The provided `infra/otel-collector-config.yaml` is intentionally minimal — `receivers: [otlp]`, `processors: [batch]`, `exporters: [otlp/jaeger, debug]`. Swap `otlp/jaeger` for `otlp/tempo` or any other OTLP-compatible backend when wiring to your platform.
+3. `BatchSpanProcessor` queues spans before flushing; tests and short-lived processes must call `proc.force_flush()` (or rely on `provider.shutdown()`) before reading the collector's output. The CI `otel-smoke` job calls `force_flush(timeout_millis=5000)` on every attached processor and then polls `docker compose logs otel-collector` until the expected number of `Name : ...` lines from the `debug` exporter (`verbosity: detailed`) appear.
 
 The `otel-smoke` job is the canonical end-to-end recipe for the live OTLP path:
 
 ```yaml
 - name: spin otel-collector + jaeger
   run: docker compose up -d otel-collector jaeger
-- name: live OTLP -> collector -> file dump
+- name: live OTLP -> collector -> debug stdout
   env:
     EVAL_OBS_OTEL_EXPORTER: otlp
     EVAL_OBS_OTEL_ENDPOINT: http://localhost:4317
   run: poetry run python -m scripts.otel_smoke
 ```
 
-`scripts/otel_smoke.py` runs a 2-example eval, force-flushes every processor, and asserts the collector's `spans.jsonl` contains the expected span hierarchy (1 suite_run + 1 category_run + 2 example_run + 2 llm_call + 2 score). Failures dump `docker compose logs otel-collector` so the actual exporter wire is debuggable.
+`scripts/otel_smoke.py` runs a 2-example eval, force-flushes every processor, and asserts the collector's stdout contains the expected span hierarchy (1 suite_run + 1 category_run + 2 example_run + 2 llm_call + 2 score). Failures dump `docker compose logs otel-collector` so the actual exporter wire is debuggable.
 
 ## The OTel set-once gotcha
 

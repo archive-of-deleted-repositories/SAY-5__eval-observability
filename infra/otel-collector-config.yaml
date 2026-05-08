@@ -16,17 +16,19 @@ exporters:
     endpoint: jaeger:14250
     tls:
       insecure: true
+  # ``debug`` is the introspection channel used by the CI ``otel-smoke`` job.
+  # ``verbosity: detailed`` prints each received span (name + attrs) to the
+  # collector's stdout where ``docker compose logs otel-collector`` can
+  # capture it.
   debug:
     verbosity: detailed
-  # File exporter writes received spans as newline-delimited JSON. The CI
-  # ``otel-smoke`` job mounts a host directory at ``/data`` and reads
-  # ``spans.jsonl`` to assert the collector saw the expected span tree.
-  file:
-    path: /data/spans.jsonl
 
 service:
+  telemetry:
+    logs:
+      level: info
   pipelines:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [otlp/jaeger, debug, file]
+      exporters: [otlp/jaeger, debug]
