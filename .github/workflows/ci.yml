@@ -133,7 +133,7 @@ jobs:
                             finished_at=base - timedelta(days=d) + timedelta(seconds=10),
                             status="completed", otel_trace_id="0"*32)
                   s.add(run); s.flush()
-                  for cat, prior in [("extraction", 0.99), ("summarization", 0.62)]:
+                  for cat, prior in [("extraction", 0.999), ("classification", 0.99)]:
                       for i in range(8):
                           s.add(RunItem(run_id=run.id, category=cat,
                                         example_id=f"{cat}-prior-{d}-{i}",
