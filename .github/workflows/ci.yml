@@ -60,6 +60,8 @@ jobs:
       - run: poetry install --with dev
       - run: poetry run alembic upgrade head
       - run: poetry run pytest tests/unit tests/trace -v
+      - name: coverage gate (>= 79%)
+        run: poetry run pytest tests/unit tests/trace --cov=src/eval_observability --cov-report=term --cov-fail-under=79
       - name: integration
         env:
           RUN_INTEGRATION: "1"

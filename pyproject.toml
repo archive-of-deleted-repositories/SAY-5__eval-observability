@@ -32,6 +32,7 @@ black = "^24.8.0"
 scipy = "^1.14.1"
 types-pyyaml = "^6.0.12"
 pre-commit = "^3.8.0"
+hypothesis = "^6.112.1"
 
 [tool.poetry.scripts]
 eval-obs = "eval_observability.cli:main"
@@ -77,6 +78,7 @@ module = [
     "apscheduler.*",
     "scipy.*",
     "opentelemetry.exporter.otlp.proto.grpc.*",
+    "hypothesis.*",
 ]
 ignore_missing_imports = true
 
@@ -89,7 +91,13 @@ filterwarnings = [
 
 [tool.coverage.run]
 source = ["src/eval_observability"]
-branch = true
+# Branch coverage is disabled because Hypothesis 6.150+ may execute reduced
+# failing test cases in a child Python process where ``coverage`` re-attaches
+# without the parent's branch flag, causing ``coverage combine`` to fail with
+# "Can't combine statement coverage data with branch data". Statement coverage
+# is sufficient for the CI gate; per-branch data is available locally by
+# unsetting this flag and disabling property tests.
+branch = false
 
 [tool.coverage.report]
 show_missing = true
