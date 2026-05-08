@@ -51,7 +51,7 @@ The `RegressionAlert` rows, on the other hand, are *not* deduped per day. If the
 Real eval pipelines have to ship traces somewhere — Jaeger, Tempo, an OTel collector, etc. CI shouldn't depend on any of that. The `obs/otel.py` module configures the SDK with one of three exporters at runtime:
 
 - `memory` — `InMemorySpanExporter` keeps finished spans on a Python list; tests read it directly. (Used by every test except integration.)
-- `stdout` — `ConsoleSpanExporter` emits each span as a printed dict; useful for local debugging.
+- `console` — `ConsoleSpanExporter` emits each span as a printed dict; useful for local debugging. (`stdout` is accepted as an alias.)
 - `otlp` — `OTLPSpanExporter` over gRPC; what production deployments use.
 
 The `InMemoryExporterHandle` returned by `configure_tracing(exporter="memory")` exposes `.finished_spans()` and `.clear()` so a test can do:
@@ -62,13 +62,51 @@ def test_full_suite_span_tree(fresh_db, trace_handle):
     spans = trace_handle.finished_spans()
     by_name = group_by_name(spans)
     assert len(by_name["suite_run"]) == 1
-    assert len(by_name["example_run"]) == 60
+    assert len(by_name["example_run"]) == 600
     cat_ids = {c.context.span_id for c in by_name["category_run"]}
     for ex in by_name["example_run"]:
         assert ex.parent.span_id in cat_ids
 ```
 
 This pattern catches regressions in the span graph (e.g., an `await` that breaks context propagation) without needing a Jaeger sidecar.
+
+## Production wire-in (OTLP -> collector -> Tempo/Jaeger)
+
+The `otlp` exporter mode is what production deployments use. The runtime
+flow:
+
+```
+eval-obs run                                 (this process)
+   │     EVAL_OBS_OTEL_EXPORTER=otlp
+   │     EVAL_OBS_OTEL_ENDPOINT=http://otel-collector:4317
+   ▼
+opentelemetry-collector(-contrib)            (sidecar / DaemonSet)
+   │  receivers:    otlp/grpc + otlp/http
+   │  processors:   batch
+   │  exporters:    otlp/jaeger, otlp/tempo, debug, file
+   ▼
+Tempo  /  Jaeger                             (whichever your platform runs)
+```
+
+Three things to know about the collector:
+
+1. The collector image must be **`otel/opentelemetry-collector-contrib`**, not the vanilla `otel/opentelemetry-collector`. The `file` exporter we use to introspect spans from the `otel-smoke` CI job lives in the contrib distribution. Production stacks that don't introspect file dumps can use either image.
+2. The provided `infra/otel-collector-config.yaml` is intentionally minimal — `receivers: [otlp]`, `processors: [batch]`, `exporters: [otlp/jaeger, debug, file]`. Swap `otlp/jaeger` for `otlp/tempo` or any other OTLP-compatible backend when wiring to your platform.
+3. `BatchSpanProcessor` queues spans before flushing; tests and short-lived processes must call `proc.force_flush()` (or rely on `provider.shutdown()`) before reading the collector's output. The CI `otel-smoke` job calls `force_flush(timeout_millis=5000)` on every attached processor and then polls `infra/collector-data/spans.jsonl` until the expected span count appears.
+
+The `otel-smoke` job is the canonical end-to-end recipe for the live OTLP path:
+
+```yaml
+- name: spin otel-collector + jaeger
+  run: docker compose up -d otel-collector jaeger
+- name: live OTLP -> collector -> file dump
+  env:
+    EVAL_OBS_OTEL_EXPORTER: otlp
+    EVAL_OBS_OTEL_ENDPOINT: http://localhost:4317
+  run: poetry run python -m scripts.otel_smoke
+```
+
+`scripts/otel_smoke.py` runs a 2-example eval, force-flushes every processor, and asserts the collector's `spans.jsonl` contains the expected span hierarchy (1 suite_run + 1 category_run + 2 example_run + 2 llm_call + 2 score). Failures dump `docker compose logs otel-collector` so the actual exporter wire is debuggable.
 
 ## The OTel set-once gotcha
 

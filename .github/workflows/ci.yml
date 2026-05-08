@@ -148,9 +148,46 @@ jobs:
               print(Path(rep.file_path).read_text())
           PY
 
+  otel-smoke:
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install poetry==1.8.3
+      - run: poetry install --with dev
+      - name: prepare collector data dir
+        run: |
+          mkdir -p infra/collector-data
+          # collector runs as a non-root user; relax perms so the file
+          # exporter can write spans.jsonl.
+          chmod 0777 infra/collector-data
+      - name: spin otel-collector + jaeger
+        run: docker compose up -d otel-collector jaeger
+      - name: wait for collector to bind 4317
+        run: |
+          for i in $(seq 1 30); do
+            (echo > /dev/tcp/127.0.0.1/4317) >/dev/null 2>&1 && break
+            sleep 1
+          done
+      - name: init schema
+        run: poetry run python -m eval_observability.cli init
+      - name: live OTLP -> collector -> file dump
+        env:
+          EVAL_OBS_OTEL_EXPORTER: otlp
+          EVAL_OBS_OTEL_ENDPOINT: http://localhost:4317
+        run: poetry run python -m scripts.otel_smoke
+      - name: dump collector logs (for debug if failed)
+        if: failure()
+        run: docker compose logs otel-collector
+      - name: tear down
+        if: always()
+        run: docker compose down -v
+
   build-image:
     runs-on: ubuntu-latest
-    needs: [test, eval-smoke, cron-smoke, bench-regress]
+    needs: [test, eval-smoke, cron-smoke, bench-regress, otel-smoke]
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4

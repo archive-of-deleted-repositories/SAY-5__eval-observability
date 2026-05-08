@@ -52,3 +52,5 @@ reports/local-*.md
 *.db
 .env
 .env.local
+infra/collector-data/*
+!infra/collector-data/.gitkeep

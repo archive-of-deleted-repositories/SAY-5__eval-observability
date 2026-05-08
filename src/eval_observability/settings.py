@@ -17,7 +17,10 @@ class Settings(BaseSettings):
     )
     otel_exporter: str = Field(
         default="memory",
-        description="One of: memory, stdout, otlp. The 'memory' exporter is for tests.",
+        description=(
+            "One of: memory, console, otlp. ('stdout' is an alias for 'console'.) "
+            "The 'memory' exporter is for tests; 'otlp' is the production wire-in."
+        ),
     )
     otel_endpoint: str = Field(
         default="http://localhost:4317",
