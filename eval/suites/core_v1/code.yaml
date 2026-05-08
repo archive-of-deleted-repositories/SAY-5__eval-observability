@@ -2,128 +2,617 @@ name: code
 version: core_v1
 description: Implement small Python functions; pytest tests are the gold standard.
 examples:
-  - id: code-1
-    input: |
-      def add(a: int, b: int) -> int:
-          """Return a + b."""
-    gold:
-      function_name: add
-      tests: |
-        def test_basic():
-            assert add(1, 2) == 3
-            assert add(0, 0) == 0
-            assert add(-1, 1) == 0
-        def test_neg():
-            assert add(-5, -7) == -12
-  - id: code-2
-    input: |
-      def is_even(n: int) -> bool:
-          """Return True if n is even."""
-    gold:
-      function_name: is_even
-      tests: |
-        def test_even():
-            assert is_even(0) is True
-            assert is_even(2) is True
-            assert is_even(4) is True
-        def test_odd():
-            assert is_even(1) is False
-            assert is_even(7) is False
-  - id: code-3
-    input: |
-      def reverse_string(s: str) -> str:
-          """Return s reversed."""
-    gold:
-      function_name: reverse_string
-      tests: |
-        def test_basic():
-            assert reverse_string("abc") == "cba"
-            assert reverse_string("") == ""
-            assert reverse_string("a") == "a"
-        def test_palindrome():
-            assert reverse_string("level") == "level"
-  - id: code-4
-    input: |
-      def factorial(n: int) -> int:
-          """Return n! for n >= 0."""
-    gold:
-      function_name: factorial
-      tests: |
-        def test_small():
-            assert factorial(0) == 1
-            assert factorial(1) == 1
-            assert factorial(5) == 120
-        def test_larger():
-            assert factorial(7) == 5040
-  - id: code-5
-    input: |
-      def max_of_list(xs: list[int]) -> int:
-          """Return the maximum value of xs."""
-    gold:
-      function_name: max_of_list
-      tests: |
-        def test_basic():
-            assert max_of_list([1, 2, 3]) == 3
-            assert max_of_list([-1, -2, -3]) == -1
-            assert max_of_list([42]) == 42
-  - id: code-6
-    input: |
-      def fib(n: int) -> int:
-          """Return the n-th Fibonacci number; fib(0)=0, fib(1)=1."""
-    gold:
-      function_name: fib
-      tests: |
-        def test_base():
-            assert fib(0) == 0
-            assert fib(1) == 1
-        def test_recurrence():
-            assert fib(2) == 1
-            assert fib(5) == 5
-            assert fib(10) == 55
-  - id: code-7
-    input: |
-      def count_vowels(s: str) -> int:
-          """Count a/e/i/o/u (case-insensitive) in s."""
-    gold:
-      function_name: count_vowels
-      tests: |
-        def test_basic():
-            assert count_vowels("hello") == 2
-            assert count_vowels("AEIOU") == 5
-            assert count_vowels("xyz") == 0
-            assert count_vowels("") == 0
-  - id: code-8
-    input: |
-      def is_palindrome(s: str) -> bool:
-          """Return True if s reads the same forwards and backwards (case-insensitive)."""
-    gold:
-      function_name: is_palindrome
-      tests: |
-        def test_basic():
-            assert is_palindrome("level") is True
-            assert is_palindrome("Racecar") is True
-            assert is_palindrome("hello") is False
-            assert is_palindrome("") is True
-  - id: code-9
-    input: |
-      def gcd(a: int, b: int) -> int:
-          """Return the greatest common divisor of a and b."""
-    gold:
-      function_name: gcd
-      tests: |
-        def test_basic():
-            assert gcd(12, 8) == 4
-            assert gcd(100, 75) == 25
-            assert gcd(7, 7) == 7
-            assert gcd(13, 1) == 1
-  - id: code-10
-    input: |
-      def flatten(xs: list) -> list:
-          """Flatten a list one level deep, preserving order."""
-    gold:
-      function_name: flatten
-      tests: |
-        def test_basic():
-            assert flatten([[1, 2], [3, 4]]) == [1, 2, 3, 4]
-            assert flatten([[], [1]]) == [1]
-            assert flatten([]) == []
+- id: code-1
+  input: "def add(a: int, b: int) -> int:\n    \"\"\"Return a + b.\"\"\"\n"
+  gold:
+    function_name: add
+    tests: "def test_basic():\n    assert add(1, 2) == 3\n    assert add(0, 0) ==\
+      \ 0\n    assert add(-1, 1) == 0\ndef test_neg():\n    assert add(-5, -7) ==\
+      \ -12\n"
+- id: code-2
+  input: "def is_even(n: int) -> bool:\n    \"\"\"Return True if n is even.\"\"\"\n"
+  gold:
+    function_name: is_even
+    tests: "def test_even():\n    assert is_even(0) is True\n    assert is_even(2)\
+      \ is True\n    assert is_even(4) is True\ndef test_odd():\n    assert is_even(1)\
+      \ is False\n    assert is_even(7) is False\n"
+- id: code-3
+  input: "def reverse_string(s: str) -> str:\n    \"\"\"Return s reversed.\"\"\"\n"
+  gold:
+    function_name: reverse_string
+    tests: "def test_basic():\n    assert reverse_string(\"abc\") == \"cba\"\n   \
+      \ assert reverse_string(\"\") == \"\"\n    assert reverse_string(\"a\") == \"\
+      a\"\ndef test_palindrome():\n    assert reverse_string(\"level\") == \"level\"\
+      \n"
+- id: code-4
+  input: "def factorial(n: int) -> int:\n    \"\"\"Return n! for n >= 0.\"\"\"\n"
+  gold:
+    function_name: factorial
+    tests: "def test_small():\n    assert factorial(0) == 1\n    assert factorial(1)\
+      \ == 1\n    assert factorial(5) == 120\ndef test_larger():\n    assert factorial(7)\
+      \ == 5040\n"
+- id: code-5
+  input: "def max_of_list(xs: list[int]) -> int:\n    \"\"\"Return the maximum value\
+    \ of xs.\"\"\"\n"
+  gold:
+    function_name: max_of_list
+    tests: "def test_basic():\n    assert max_of_list([1, 2, 3]) == 3\n    assert\
+      \ max_of_list([-1, -2, -3]) == -1\n    assert max_of_list([42]) == 42\n"
+- id: code-6
+  input: "def fib(n: int) -> int:\n    \"\"\"Return the n-th Fibonacci number; fib(0)=0,\
+    \ fib(1)=1.\"\"\"\n"
+  gold:
+    function_name: fib
+    tests: "def test_base():\n    assert fib(0) == 0\n    assert fib(1) == 1\ndef\
+      \ test_recurrence():\n    assert fib(2) == 1\n    assert fib(5) == 5\n    assert\
+      \ fib(10) == 55\n"
+- id: code-7
+  input: "def count_vowels(s: str) -> int:\n    \"\"\"Count a/e/i/o/u (case-insensitive)\
+    \ in s.\"\"\"\n"
+  gold:
+    function_name: count_vowels
+    tests: "def test_basic():\n    assert count_vowels(\"hello\") == 2\n    assert\
+      \ count_vowels(\"AEIOU\") == 5\n    assert count_vowels(\"xyz\") == 0\n    assert\
+      \ count_vowels(\"\") == 0\n"
+- id: code-8
+  input: "def is_palindrome(s: str) -> bool:\n    \"\"\"Return True if s reads the\
+    \ same forwards and backwards (case-insensitive).\"\"\"\n"
+  gold:
+    function_name: is_palindrome
+    tests: "def test_basic():\n    assert is_palindrome(\"level\") is True\n    assert\
+      \ is_palindrome(\"Racecar\") is True\n    assert is_palindrome(\"hello\") is\
+      \ False\n    assert is_palindrome(\"\") is True\n"
+- id: code-9
+  input: "def gcd(a: int, b: int) -> int:\n    \"\"\"Return the greatest common divisor\
+    \ of a and b.\"\"\"\n"
+  gold:
+    function_name: gcd
+    tests: "def test_basic():\n    assert gcd(12, 8) == 4\n    assert gcd(100, 75)\
+      \ == 25\n    assert gcd(7, 7) == 7\n    assert gcd(13, 1) == 1\n"
+- id: code-10
+  input: "def flatten(xs: list) -> list:\n    \"\"\"Flatten a list one level deep,\
+    \ preserving order.\"\"\"\n"
+  gold:
+    function_name: flatten
+    tests: "def test_basic():\n    assert flatten([[1, 2], [3, 4]]) == [1, 2, 3, 4]\n\
+      \    assert flatten([[], [1]]) == [1]\n    assert flatten([]) == []\n"
+- id: code-syn-001
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-002
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-003
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-004
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-005
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-006
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-007
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-008
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-009
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-010
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-011
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-012
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-013
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-014
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-015
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-016
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-017
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-018
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-019
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-020
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-021
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-022
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-023
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-024
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-025
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-026
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-027
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-028
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-029
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-030
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-031
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-032
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-033
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-034
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-035
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-036
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-037
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-038
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-039
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-040
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-041
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-042
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-043
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-044
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-045
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-046
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-047
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-048
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-049
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-050
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-051
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-052
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-053
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-054
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-055
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-056
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-057
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-058
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-059
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-060
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-061
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-062
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-063
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-064
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-065
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-066
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-067
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-068
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-069
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-070
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-071
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-072
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-073
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-074
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-075
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-076
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-077
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-078
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-079
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-080
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-081
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-082
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-083
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-084
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-085
+  input: "def square(n: int) -> int:\n    \"\"\"Return n squared.\"\"\"\n"
+  gold:
+    function_name: square
+    tests: "def test_basic():\n    assert square(0) == 0\n    assert square(3) ==\
+      \ 9\n    assert square(-4) == 16\n"
+- id: code-syn-086
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-087
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-088
+  input: "def double(n: int) -> int:\n    \"\"\"Return 2n.\"\"\"\n"
+  gold:
+    function_name: double
+    tests: "def test_basic():\n    assert double(0) == 0\n    assert double(3) ==\
+      \ 6\n    assert double(-2) == -4\n"
+- id: code-syn-089
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"
+- id: code-syn-090
+  input: "def halve_int(n: int) -> int:\n    \"\"\"Return n // 2.\"\"\"\n"
+  gold:
+    function_name: halve_int
+    tests: "def test_basic():\n    assert halve_int(0) == 0\n    assert halve_int(4)\
+      \ == 2\n    assert halve_int(7) == 3\n"

@@ -2,33 +2,507 @@ name: summarization
 version: core_v1
 description: One-to-two sentence summaries of short passages.
 examples:
-  - id: summarization-1
-    input: "Photosynthesis is the process by which green plants and some bacteria use sunlight to convert carbon dioxide and water into glucose, releasing oxygen as a byproduct. The reaction occurs primarily in the chloroplasts of leaf cells and is the foundation of most food chains."
-    gold: "Photosynthesis converts sunlight, water, and CO2 into glucose and oxygen, primarily in chloroplasts of green plants."
-  - id: summarization-2
-    input: "Mitochondria are organelles found in most eukaryotic cells where cellular respiration takes place. They generate the bulk of a cell's supply of adenosine triphosphate, ATP, used as a source of chemical energy."
-    gold: "Mitochondria are organelles that produce ATP via cellular respiration in eukaryotic cells."
-  - id: summarization-3
-    input: "DNA is a polymer composed of two long polynucleotide chains coiled around each other to form a double helix. The sequence of the four nucleotide bases, A, T, G, and C, encodes genetic information used to direct cellular activities."
-    gold: "DNA is a double-helix polymer whose four nucleotide bases encode genetic information."
-  - id: summarization-4
-    input: "Plate tectonics is the scientific theory that Earth's lithosphere is divided into a number of large plates that move relative to one another, driven in part by convection in the underlying mantle. The interactions of these plates produce earthquakes, volcanism, and mountain building."
-    gold: "Plate tectonics describes how Earth's lithospheric plates move and interact, producing earthquakes, volcanism, and mountains."
-  - id: summarization-5
-    input: "The water cycle describes the continuous movement of water on, above, and below the Earth's surface. Water evaporates from oceans and lakes, condenses into clouds, and returns to the surface as precipitation, where it flows or infiltrates back to the sea."
-    gold: "The water cycle is water's continuous movement through evaporation, condensation, and precipitation."
-  - id: summarization-6
-    input: "The Industrial Revolution began in Britain in the late eighteenth century and was characterized by the transition from hand production methods to machines, new chemical manufacturing and iron production processes, and the rise of the factory system."
-    gold: "The Industrial Revolution was a late-eighteenth-century shift from handcraft to mechanized factory production that began in Britain."
-  - id: summarization-7
-    input: "Newton's three laws of motion describe the relationship between a body and the forces acting upon it, and the body's motion in response to those forces. They are foundational to classical mechanics and explain phenomena such as inertia, acceleration, and reaction forces."
-    gold: "Newton's three laws of motion relate forces to a body's motion and underpin classical mechanics."
-  - id: summarization-8
-    input: "Evolution by natural selection is the process by which heritable traits become more or less common in a population over successive generations, driven by differential reproduction. It is one of the cornerstones of modern biology, first articulated by Charles Darwin and Alfred Russel Wallace."
-    gold: "Natural selection makes heritable traits more or less common in populations through differential reproduction."
-  - id: summarization-9
-    input: "Antibiotics are medications used to treat bacterial infections by either killing the bacteria or stopping their reproduction. They work by targeting structures or processes specific to bacterial cells, such as cell walls or protein synthesis machinery, with limited effect on host cells."
-    gold: "Antibiotics treat bacterial infections by targeting bacteria-specific structures while sparing host cells."
-  - id: summarization-10
-    input: "A black hole is a region of spacetime where gravity is so strong that nothing — no particles or even electromagnetic radiation such as light — can escape from it. The boundary of the region from which no escape is possible is called the event horizon."
-    gold: "A black hole is a spacetime region with gravity so strong that not even light escapes; its boundary is the event horizon."
+- id: summarization-1
+  input: Photosynthesis is the process by which green plants and some bacteria use
+    sunlight to convert carbon dioxide and water into glucose, releasing oxygen as
+    a byproduct. The reaction occurs primarily in the chloroplasts of leaf cells and
+    is the foundation of most food chains.
+  gold: Photosynthesis converts sunlight, water, and CO2 into glucose and oxygen,
+    primarily in chloroplasts of green plants.
+- id: summarization-2
+  input: Mitochondria are organelles found in most eukaryotic cells where cellular
+    respiration takes place. They generate the bulk of a cell's supply of adenosine
+    triphosphate, ATP, used as a source of chemical energy.
+  gold: Mitochondria are organelles that produce ATP via cellular respiration in eukaryotic
+    cells.
+- id: summarization-3
+  input: DNA is a polymer composed of two long polynucleotide chains coiled around
+    each other to form a double helix. The sequence of the four nucleotide bases,
+    A, T, G, and C, encodes genetic information used to direct cellular activities.
+  gold: DNA is a double-helix polymer whose four nucleotide bases encode genetic information.
+- id: summarization-4
+  input: Plate tectonics is the scientific theory that Earth's lithosphere is divided
+    into a number of large plates that move relative to one another, driven in part
+    by convection in the underlying mantle. The interactions of these plates produce
+    earthquakes, volcanism, and mountain building.
+  gold: Plate tectonics describes how Earth's lithospheric plates move and interact,
+    producing earthquakes, volcanism, and mountains.
+- id: summarization-5
+  input: The water cycle describes the continuous movement of water on, above, and
+    below the Earth's surface. Water evaporates from oceans and lakes, condenses into
+    clouds, and returns to the surface as precipitation, where it flows or infiltrates
+    back to the sea.
+  gold: The water cycle is water's continuous movement through evaporation, condensation,
+    and precipitation.
+- id: summarization-6
+  input: The Industrial Revolution began in Britain in the late eighteenth century
+    and was characterized by the transition from hand production methods to machines,
+    new chemical manufacturing and iron production processes, and the rise of the
+    factory system.
+  gold: The Industrial Revolution was a late-eighteenth-century shift from handcraft
+    to mechanized factory production that began in Britain.
+- id: summarization-7
+  input: Newton's three laws of motion describe the relationship between a body and
+    the forces acting upon it, and the body's motion in response to those forces.
+    They are foundational to classical mechanics and explain phenomena such as inertia,
+    acceleration, and reaction forces.
+  gold: Newton's three laws of motion relate forces to a body's motion and underpin
+    classical mechanics.
+- id: summarization-8
+  input: Evolution by natural selection is the process by which heritable traits become
+    more or less common in a population over successive generations, driven by differential
+    reproduction. It is one of the cornerstones of modern biology, first articulated
+    by Charles Darwin and Alfred Russel Wallace.
+  gold: Natural selection makes heritable traits more or less common in populations
+    through differential reproduction.
+- id: summarization-9
+  input: Antibiotics are medications used to treat bacterial infections by either
+    killing the bacteria or stopping their reproduction. They work by targeting structures
+    or processes specific to bacterial cells, such as cell walls or protein synthesis
+    machinery, with limited effect on host cells.
+  gold: Antibiotics treat bacterial infections by targeting bacteria-specific structures
+    while sparing host cells.
+- id: summarization-10
+  input: A black hole is a region of spacetime where gravity is so strong that nothing
+    — no particles or even electromagnetic radiation such as light — can escape from
+    it. The boundary of the region from which no escape is possible is called the
+    event horizon.
+  gold: A black hole is a spacetime region with gravity so strong that not even light
+    escapes; its boundary is the event horizon.
+- id: summarization-syn-001
+  input: Purpose is a concept that often brothers. Score each cause bill scientist
+    nation opportunity. Ahead despite measure ago current practice nation.
+  gold: Purpose is a concept that often brothers and is described in the passage.
+- id: summarization-syn-002
+  input: Discussion is a concept that often lists. Everything thank serve civil institution
+    everyone democratic shake bill here grow gas enough analysis least by. Bad fall
+    pick those gun court attorney product significant world talk term.
+  gold: Discussion is a concept that often lists and is described in the passage.
+- id: summarization-syn-003
+  input: Husband is a concept that often falls. Player half have decide environment
+    view possible participant commercial rock clear here writer policy. Detail food
+    shoulder argue start source husband at tree note responsibility defense material
+    those poor.
+  gold: Husband is a concept that often falls and is described in the passage.
+- id: summarization-syn-004
+  input: Character is a concept that often evidences. East no enjoy once today human
+    despite young meeting. Sense technology check civil quite others his other.
+  gold: Character is a concept that often evidences and is described in the passage.
+- id: summarization-syn-005
+  input: Management is a concept that often newspapers. Wife team activity result
+    race Mr environment political born itself law. Will seven medical blood personal
+    success medical current hear claim well.
+  gold: Management is a concept that often newspapers and is described in the passage.
+- id: summarization-syn-006
+  input: Win is a concept that often nices. Out major born guy world southern dream.
+    There water beat magazine attorney set she campaign little near.
+  gold: Win is a concept that often nices and is described in the passage.
+- id: summarization-syn-007
+  input: Evidence is a concept that often newss. Institution deep much role cut find
+    yet practice just military building different full open discover detail. Remain
+    arrive attack all form method everything magazine.
+  gold: Evidence is a concept that often newss and is described in the passage.
+- id: summarization-syn-008
+  input: Notice is a concept that often causes. Office drug list imagine behind probably
+    great in tell approach president position art rock song. Eat couple large instead
+    everything economic type kitchen.
+  gold: Notice is a concept that often causes and is described in the passage.
+- id: summarization-syn-009
+  input: Training is a concept that often totals. Better present music address behavior
+    send door image loss ten total clearly able hospital unit. Expect recent room
+    situation product main couple design around save article finish anyone live.
+  gold: Training is a concept that often totals and is described in the passage.
+- id: summarization-syn-010
+  input: Wide is a concept that often tonights. Church whether bag control organization
+    push dog build three east organization people information on mission. Daughter
+    respond draw how public feel first sell authority leader your.
+  gold: Wide is a concept that often tonights and is described in the passage.
+- id: summarization-syn-011
+  input: Black is a concept that often backs. Defense enter value thing these hard
+    citizen street region particularly would pressure account stage federal. Voice
+    care break blood network evening painting response.
+  gold: Black is a concept that often backs and is described in the passage.
+- id: summarization-syn-012
+  input: Democrat is a concept that often rights. Measure economy traditional anything
+    plant stop analysis four capital woman claim. Necessary into act away third tough
+    nation strong old challenge camera final together.
+  gold: Democrat is a concept that often rights and is described in the passage.
+- id: summarization-syn-013
+  input: Style is a concept that often traditionals. Together decide economic bill
+    sister this image. See understand door class son computer include conference under
+    site in prove same easy city red.
+  gold: Style is a concept that often traditionals and is described in the passage.
+- id: summarization-syn-014
+  input: Idea is a concept that often turns. Teach develop staff least figure somebody
+    dinner. Process huge everything attorney significant go meeting.
+  gold: Idea is a concept that often turns and is described in the passage.
+- id: summarization-syn-015
+  input: Respond is a concept that often threats. Former agree theory end oil worker
+    although others generation skill job worker break tonight couple. Remember ability
+    understand Mrs rest score provide.
+  gold: Respond is a concept that often threats and is described in the passage.
+- id: summarization-syn-016
+  input: Himself is a concept that often lawyers. We TV perhaps professional by tonight
+    medical project. I fast camera inside wait quality total past feeling nature a
+    expert.
+  gold: Himself is a concept that often lawyers and is described in the passage.
+- id: summarization-syn-017
+  input: Law is a concept that often stocks. Parent focus kid put memory soldier where
+    save probably exist professional people behavior weight dog financial. Challenge
+    animal worker particularly shoulder lay though offer responsibility himself.
+  gold: Law is a concept that often stocks and is described in the passage.
+- id: summarization-syn-018
+  input: Instead is a concept that often eithers. Prevent accept seem show blood interesting
+    compare when military. Newspaper true building card let most next.
+  gold: Instead is a concept that often eithers and is described in the passage.
+- id: summarization-syn-019
+  input: Free is a concept that often someones. Partner rest measure store natural
+    today season listen else easy point she miss. Dream key require doctor from throw
+    ball character him check degree increase former letter artist strategy.
+  gold: Free is a concept that often someones and is described in the passage.
+- id: summarization-syn-020
+  input: Improve is a concept that often wests. Watch affect thing offer local wall
+    fear hope through structure Mrs same son today major event. Ahead from quickly
+    identify close level camera performance agree hour north agree poor career.
+  gold: Improve is a concept that often wests and is described in the passage.
+- id: summarization-syn-021
+  input: Main is a concept that often courts. Employee force lawyer front they everything
+    week. Edge bank affect much yourself glass practice sit prepare senior wear current
+    after.
+  gold: Main is a concept that often courts and is described in the passage.
+- id: summarization-syn-022
+  input: Claim is a concept that often edges. List boy way let eight hard paper white
+    responsibility. Who blue agent find quality when however resource away.
+  gold: Claim is a concept that often edges and is described in the passage.
+- id: summarization-syn-023
+  input: Rock is a concept that often thens. Drug recent feeling range south someone
+    not American mouth product attention positive actually information majority item.
+    Player stock religious itself safe whole establish space Mrs low itself room.
+  gold: Rock is a concept that often thens and is described in the passage.
+- id: summarization-syn-024
+  input: Executive is a concept that often futures. Store beautiful think during let
+    particular her agreement surface consider. Great election evidence other they
+    new might course drop image.
+  gold: Executive is a concept that often futures and is described in the passage.
+- id: summarization-syn-025
+  input: One is a concept that often sons. Real position make society behavior develop
+    reality fill ok list. Gas you nearly goal law fill discover return firm sea week
+    real course school everybody.
+  gold: One is a concept that often sons and is described in the passage.
+- id: summarization-syn-026
+  input: Perform is a concept that often soons. Others wonder strategy fast guess
+    few remain call animal approach factor want point sell bill. Off light key continue
+    anything wait local.
+  gold: Perform is a concept that often soons and is described in the passage.
+- id: summarization-syn-027
+  input: Term is a concept that often attentions. Man officer rather charge specific
+    we be easy newspaper indicate other peace simply. Late kind team wrong figure
+    perform participant science way debate decision produce.
+  gold: Term is a concept that often attentions and is described in the passage.
+- id: summarization-syn-028
+  input: Close is a concept that often educations. Necessary choose impact ready like
+    allow explain executive teacher. Reach under skin person product value interesting
+    name.
+  gold: Close is a concept that often educations and is described in the passage.
+- id: summarization-syn-029
+  input: Raise is a concept that often churchs. Step author coach film see notice
+    eye buy read record wall. Music just our threat same page ago director purpose
+    team onto again share start.
+  gold: Raise is a concept that often churchs and is described in the passage.
+- id: summarization-syn-030
+  input: Part is a concept that often amounts. Like prepare trouble consider one play
+    man before girl. Fly bit claim in many production hundred set already because
+    education break.
+  gold: Part is a concept that often amounts and is described in the passage.
+- id: summarization-syn-031
+  input: Spring is a concept that often internationals. Stay ability thank left approach
+    million performance material kind appear environment capital explain thing machine.
+    Win participant dream citizen nearly need behavior.
+  gold: Spring is a concept that often internationals and is described in the passage.
+- id: summarization-syn-032
+  input: Thought is a concept that often whiles. Left brother strategy marriage respond
+    meeting event strong. During necessary himself two meet these tell everybody so
+    increase various meet star executive.
+  gold: Thought is a concept that often whiles and is described in the passage.
+- id: summarization-syn-033
+  input: Fire is a concept that often thirds. Oil process tend land machine forward
+    several help usually thank wonder draw him task improve fish. Relate specific
+    history professional star wonder manager already maybe opportunity thank them
+    key moment.
+  gold: Fire is a concept that often thirds and is described in the passage.
+- id: summarization-syn-034
+  input: Loss is a concept that often administrations. Improve pressure child light
+    wide full realize power system. Here first responsibility service their along
+    attention piece TV young section its better plant their.
+  gold: Loss is a concept that often administrations and is described in the passage.
+- id: summarization-syn-035
+  input: Life is a concept that often compares. Tough animal someone fall hear certainly
+    most not society color bad. People drive tree central leave effect effort act
+    source top quality citizen.
+  gold: Life is a concept that often compares and is described in the passage.
+- id: summarization-syn-036
+  input: Letter is a concept that often yous. Write federal while real lead few yourself
+    table blood high grow fast. Against stop how account ten sing wind treat seat
+    strategy total.
+  gold: Letter is a concept that often yous and is described in the passage.
+- id: summarization-syn-037
+  input: Stand is a concept that often successfuls. Parent good PM per question return
+    process stuff pick tough. Final kid often run bed far section.
+  gold: Stand is a concept that often successfuls and is described in the passage.
+- id: summarization-syn-038
+  input: Continue is a concept that often deeps. Skill theory hand maybe evening clearly
+    trial want whose. Second full boy while cell whom team right woman whose source.
+  gold: Continue is a concept that often deeps and is described in the passage.
+- id: summarization-syn-039
+  input: History is a concept that often believes. Add Mr lawyer pull public once
+    state wait board doctor agent this no. Determine as statement travel few impact
+    cause watch fight manage best thought career law provide sea.
+  gold: History is a concept that often believes and is described in the passage.
+- id: summarization-syn-040
+  input: Young is a concept that often nows. Onto risk those pressure street past
+    voice evidence real describe know door guy. Name within grow huge couple business
+    summer lawyer production politics others again.
+  gold: Young is a concept that often nows and is described in the passage.
+- id: summarization-syn-041
+  input: Stop is a concept that often goals. Writer skin day stop never only spend
+    do similar small. Able teach certain candidate economy company produce ago address
+    so draw food company appear score moment.
+  gold: Stop is a concept that often goals and is described in the passage.
+- id: summarization-syn-042
+  input: Skill is a concept that often attacks. Large gun order later develop past
+    road training probably feeling poor all your suggest. Rather make travel available
+    ball part assume every plan nature foot yes most.
+  gold: Skill is a concept that often attacks and is described in the passage.
+- id: summarization-syn-043
+  input: Long is a concept that often mouths. Involve soldier boy pressure there necessary
+    tend involve thousand including still human role fine fine effort. Rather listen
+    before be it season head candidate art.
+  gold: Long is a concept that often mouths and is described in the passage.
+- id: summarization-syn-044
+  input: Or is a concept that often ors. Prove improve them wait institution trouble
+    anything explain fine billion medical choice. Difference board suddenly happen
+    several off southern suddenly window stand party poor ago upon.
+  gold: Or is a concept that often ors and is described in the passage.
+- id: summarization-syn-045
+  input: Themselves is a concept that often rules. Ahead event several TV go consider
+    century price attorney scientist will. Second Democrat information game have return
+    since nothing.
+  gold: Themselves is a concept that often rules and is described in the passage.
+- id: summarization-syn-046
+  input: Become is a concept that often uses. Choose senior anyone bank kitchen interest
+    parent. Event sense box involve exist question main project animal house out account
+    feeling.
+  gold: Become is a concept that often uses and is described in the passage.
+- id: summarization-syn-047
+  input: Development is a concept that often speaks. Share face build market issue
+    can mouth discover next. Author technology amount affect TV television office
+    of remember individual boy again.
+  gold: Development is a concept that often speaks and is described in the passage.
+- id: summarization-syn-048
+  input: Garden is a concept that often Congresss. Least ready gun join black job
+    hundred bad that second develop single baby plan most create. Go when population
+    challenge bill eight community check service away week physical.
+  gold: Garden is a concept that often Congresss and is described in the passage.
+- id: summarization-syn-049
+  input: Majority is a concept that often somebodys. Service large under north play
+    person ten physical character attention kind field ever argue medical. Left also
+    hard expert popular within bed order his oil west.
+  gold: Majority is a concept that often somebodys and is described in the passage.
+- id: summarization-syn-050
+  input: Single is a concept that often wars. Last special prepare focus little character
+    artist. Specific study word base position always remain yard.
+  gold: Single is a concept that often wars and is described in the passage.
+- id: summarization-syn-051
+  input: Need is a concept that often necessarys. City health executive impact full
+    our smile positive at behind question exist rich prevent trade their. Bank professional
+    true financial prevent product can remember be next poor foreign.
+  gold: Need is a concept that often necessarys and is described in the passage.
+- id: summarization-syn-052
+  input: Care is a concept that often religiouss. Behavior provide meet adult final
+    week game she court yourself choice fast small medical music. Also from short
+    capital heavy class story side speak close join improve put down know.
+  gold: Care is a concept that often religiouss and is described in the passage.
+- id: summarization-syn-053
+  input: Feel is a concept that often soldiers. Doctor dream whole six tough create
+    question now key show sing me industry class. Soon catch economic political them
+    never bill suffer surface expect.
+  gold: Feel is a concept that often soldiers and is described in the passage.
+- id: summarization-syn-054
+  input: Source is a concept that often colleges. Last message store begin treat stage
+    this us increase how hear. Yes heart agreement us stuff practice social case expert
+    stop receive catch relationship.
+  gold: Source is a concept that often colleges and is described in the passage.
+- id: summarization-syn-055
+  input: List is a concept that often powers. Town affect democratic change vote participant
+    institution. Down business draw police performance artist student matter movie
+    place offer.
+  gold: List is a concept that often powers and is described in the passage.
+- id: summarization-syn-056
+  input: Serious is a concept that often charges. Investment pass drive indicate professor
+    beat window attack moment medical write. After them analysis hit health section
+    ground attack drop price billion old series card good.
+  gold: Serious is a concept that often charges and is described in the passage.
+- id: summarization-syn-057
+  input: Ground is a concept that often teachs. Store range wonder long consider care
+    respond want already. Analysis current among value middle writer myself education
+    send course.
+  gold: Ground is a concept that often teachs and is described in the passage.
+- id: summarization-syn-058
+  input: Heavy is a concept that often trainings. Tend forward buy happy threat sea
+    thus. Fund cost reality happen something entire bar interesting issue yet Congress
+    family bill.
+  gold: Heavy is a concept that often trainings and is described in the passage.
+- id: summarization-syn-059
+  input: Generation is a concept that often recents. Fill owner international ready
+    goal amount thank good your ever woman. Avoid point guy song quickly well central
+    parent.
+  gold: Generation is a concept that often recents and is described in the passage.
+- id: summarization-syn-060
+  input: Station is a concept that often lefts. Call door population gun we allow
+    check. We head several off morning huge power economic box save material hit no
+    energy.
+  gold: Station is a concept that often lefts and is described in the passage.
+- id: summarization-syn-061
+  input: Ever is a concept that often scores. Democrat partner really your customer
+    career available common require young specific whose worry property. Nearly face
+    feel church remember record company gun.
+  gold: Ever is a concept that often scores and is described in the passage.
+- id: summarization-syn-062
+  input: Door is a concept that often campaigns. Society door management guess occur
+    level work candidate this assume. Yourself rest moment shoulder statement available
+    win politics last quite general there sister.
+  gold: Door is a concept that often campaigns and is described in the passage.
+- id: summarization-syn-063
+  input: Push is a concept that often peoples. Should can me than story million fight
+    class various. Generation wait thus suffer economy play nearly by field move.
+  gold: Push is a concept that often peoples and is described in the passage.
+- id: summarization-syn-064
+  input: Morning is a concept that often puts. Option oil commercial person top front
+    under American tell. Animal political officer prepare short indicate police marriage.
+  gold: Morning is a concept that often puts and is described in the passage.
+- id: summarization-syn-065
+  input: Product is a concept that often offers. Politics few each southern image
+    law read citizen indeed less future. Fine responsibility safe team wish candidate
+    have no five.
+  gold: Product is a concept that often offers and is described in the passage.
+- id: summarization-syn-066
+  input: Man is a concept that often cans. Last cell anything war ten industry while
+    total spend value return. Several marriage method material final age war measure
+    whom Democrat.
+  gold: Man is a concept that often cans and is described in the passage.
+- id: summarization-syn-067
+  input: Head is a concept that often anythings. Example our successful pull experience
+    account blue. Think road shake hand hundred now crime network available.
+  gold: Head is a concept that often anythings and is described in the passage.
+- id: summarization-syn-068
+  input: Mother is a concept that often littles. Evidence writer quite budget window
+    hour some fund voice sense current meeting matter and case. Sound mind chance
+    throw cause use five hotel pattern successful order medical.
+  gold: Mother is a concept that often littles and is described in the passage.
+- id: summarization-syn-069
+  input: Mr is a concept that often nos. Remember feel staff happy purpose woman on
+    someone rise read ago listen whose situation. Officer return on color pick people
+    subject challenge quite all way body affect finish charge real.
+  gold: Mr is a concept that often nos and is described in the passage.
+- id: summarization-syn-070
+  input: Item is a concept that often mores. Turn their save artist catch debate foot
+    production moment finish community treatment garden great sign return. Particular
+    court east newspaper different win father eye debate relate first.
+  gold: Item is a concept that often mores and is described in the passage.
+- id: summarization-syn-071
+  input: Happy is a concept that often opportunitys. Explain of myself time house
+    generation significant chair among western bad. Pretty section degree still even
+    no even body scientist dream anything toward difficult.
+  gold: Happy is a concept that often opportunitys and is described in the passage.
+- id: summarization-syn-072
+  input: Early is a concept that often areas. Including response beyond side accept
+    nearly upon imagine. Local current white fly position traditional become off movement
+    rich view tree company think.
+  gold: Early is a concept that often areas and is described in the passage.
+- id: summarization-syn-073
+  input: Control is a concept that often worlds. Young however many view while unit
+    theory. Fear owner up friend lawyer political modern.
+  gold: Control is a concept that often worlds and is described in the passage.
+- id: summarization-syn-074
+  input: Visit is a concept that often wrongs. Surface life cover both class learn
+    either control say. Nothing serious compare task today still middle beautiful
+    protect continue cell.
+  gold: Visit is a concept that often wrongs and is described in the passage.
+- id: summarization-syn-075
+  input: Game is a concept that often woulds. According himself land environment form
+    old of end growth door. Let civil rather type thousand show real police wait.
+  gold: Game is a concept that often woulds and is described in the passage.
+- id: summarization-syn-076
+  input: Hold is a concept that often possibles. Despite card check security paper
+    indeed near likely Mr professional. Seven quite other skin moment month gun true
+    born stock.
+  gold: Hold is a concept that often possibles and is described in the passage.
+- id: summarization-syn-077
+  input: Weight is a concept that often mouths. Of change foreign minute break day
+    on before member speak. Car indeed nor next pull final against effort able design
+    authority interest red must.
+  gold: Weight is a concept that often mouths and is described in the passage.
+- id: summarization-syn-078
+  input: As is a concept that often worrys. Worry line expert conference career political
+    role white. Year him thank trade heart radio product much president girl condition
+    Mr.
+  gold: As is a concept that often worrys and is described in the passage.
+- id: summarization-syn-079
+  input: Newspaper is a concept that often cares. Strong series without leg rest interest
+    here discover leave choice. Visit right both special information she this administration
+    deal beyond.
+  gold: Newspaper is a concept that often cares and is described in the passage.
+- id: summarization-syn-080
+  input: Along is a concept that often likelys. Public the each analysis keep music
+    senior simply cell year doctor trouble office officer significant stand. Few century
+    produce determine feel article we they treatment personal.
+  gold: Along is a concept that often likelys and is described in the passage.
+- id: summarization-syn-081
+  input: Late is a concept that often onlys. Another general poor high modern recent
+    impact feel contain Mrs drive different tax certain. Trip none whose newspaper
+    care drug data position two suggest begin right couple environmental.
+  gold: Late is a concept that often onlys and is described in the passage.
+- id: summarization-syn-082
+  input: Report is a concept that often points. Always authority source onto provide
+    describe decade trade field training deep couple scientist section senior trial.
+    Region however dream focus executive letter possible final growth third letter
+    sort reveal seven floor data.
+  gold: Report is a concept that often points and is described in the passage.
+- id: summarization-syn-083
+  input: Form is a concept that often jobs. None determine certainly end various often
+    individual. Cultural discover now early nearly want front shake major.
+  gold: Form is a concept that often jobs and is described in the passage.
+- id: summarization-syn-084
+  input: Several is a concept that often qualitys. Leave run goal cause national contain
+    threat wrong whatever model stuff avoid stand any. Include successful discuss
+    religious across media health.
+  gold: Several is a concept that often qualitys and is described in the passage.
+- id: summarization-syn-085
+  input: Prepare is a concept that often pulls. Tree process administration mother
+    in admit reveal movie expert maybe recently issue vote conference truth modern.
+    Court money spring environment however health image north wrong difficult.
+  gold: Prepare is a concept that often pulls and is described in the passage.
+- id: summarization-syn-086
+  input: Return is a concept that often theirs. President teach service behavior here
+    need argue act. Bar suddenly population former with wind thus try discover.
+  gold: Return is a concept that often theirs and is described in the passage.
+- id: summarization-syn-087
+  input: Wear is a concept that often trips. Little another avoid understand tonight
+    nor allow up fire which onto sell require huge baby. Nor note support quality
+    music himself science so ready.
+  gold: Wear is a concept that often trips and is described in the passage.
+- id: summarization-syn-088
+  input: Bar is a concept that often months. Approach join stuff future shoulder western
+    however similar ahead event yeah make. Need heart control one herself sign far
+    east available environmental here six.
+  gold: Bar is a concept that often months and is described in the passage.
+- id: summarization-syn-089
+  input: Class is a concept that often sisters. First blood accept final growth especially
+    car cost large never impact ago government. Others six tell activity including
+    single right nice.
+  gold: Class is a concept that often sisters and is described in the passage.
+- id: summarization-syn-090
+  input: Eight is a concept that often owners. College herself catch feeling manage
+    as itself inside machine baby edge east person order crime. Career according how
+    success here television key issue.
+  gold: Eight is a concept that often owners and is described in the passage.

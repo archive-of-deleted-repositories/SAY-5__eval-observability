@@ -15,6 +15,14 @@ from typing import Any
 
 from .base import ChatMessage, ChatResponse
 
+try:
+    # Optional sidecar table emitted by ``eval.synth.synthesize``. When the
+    # synthesizer hasn't been run, fall back to an empty dict so existing
+    # IDs still resolve via the original ``CANNED`` table.
+    from ._synth_answers import SYNTH_ANSWERS
+except ImportError:  # pragma: no cover — only hit when sidecar is missing
+    SYNTH_ANSWERS = {}
+
 
 def _hash_key(messages: list[ChatMessage], model: str) -> str:
     payload = json.dumps(
@@ -139,6 +147,8 @@ class FakeProvider:
         example_id = _extract_example_id(messages)
         if example_id is not None and example_id in CANNED:
             text = CANNED[example_id]
+        elif example_id is not None and example_id in SYNTH_ANSWERS:
+            text = SYNTH_ANSWERS[example_id]
         else:
             digest = _hash_key(messages, model)
             text = f"[[fake:{digest[:8]}]]"

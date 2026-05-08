@@ -2,36 +2,36 @@
   "model": "fake-large",
   "per_category": {
     "classification": {
-      "mean_score": 0.8,
-      "n": 10.0,
-      "pass_rate": 0.8
+      "mean_score": 0.71,
+      "n": 100.0,
+      "pass_rate": 0.71
     },
     "code": {
       "mean_score": 0.8,
-      "n": 10.0,
+      "n": 100.0,
       "pass_rate": 0.8
     },
     "extraction": {
-      "mean_score": 0.9457142857142857,
-      "n": 10.0,
-      "pass_rate": 0.7
+      "mean_score": 0.9702857142857142,
+      "n": 100.0,
+      "pass_rate": 0.8
     },
     "instruction_following": {
-      "mean_score": 0.96,
-      "n": 10.0,
+      "mean_score": 0.9445714285714285,
+      "n": 100.0,
       "pass_rate": 0.8
     },
     "reasoning": {
-      "mean_score": 0.9,
-      "n": 10.0,
-      "pass_rate": 0.9
+      "mean_score": 0.905,
+      "n": 100.0,
+      "pass_rate": 0.82
     },
     "summarization": {
-      "mean_score": 0.39248043797648674,
-      "n": 10.0,
-      "pass_rate": 0.3
+      "mean_score": 0.8002959479892654,
+      "n": 100.0,
+      "pass_rate": 0.76
     }
   },
-  "total_examples": 60,
-  "total_passed": 43
+  "total_examples": 600,
+  "total_passed": 469
 }

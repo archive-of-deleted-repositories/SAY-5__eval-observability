@@ -2,43 +2,805 @@ name: extraction
 version: core_v1
 description: Extract named entities from short passages.
 examples:
-  - id: extraction-1
-    input: "The Eiffel Tower stands in Paris, the capital of France."
-    gold:
-      entities: ["Eiffel Tower", "Paris", "France"]
-  - id: extraction-2
-    input: "Apollo 11 carried Neil Armstrong and Buzz Aldrin to the Moon in 1969."
-    gold:
-      entities: ["Apollo 11", "Neil Armstrong", "Buzz Aldrin", "Moon"]
-  - id: extraction-3
-    input: "Marie Curie discovered radium and polonium in the late nineteenth century."
-    gold:
-      entities: ["Marie Curie", "radium", "polonium"]
-  - id: extraction-4
-    input: "Mount Everest sits on the border between Nepal and Tibet."
-    gold:
-      entities: ["Mount Everest", "Nepal", "Tibet"]
-  - id: extraction-5
-    input: "Carbon allotropes include graphite and diamond."
-    gold:
-      entities: ["carbon", "graphite", "diamond"]
-  - id: extraction-6
-    input: "Earth has five oceans: Pacific, Atlantic, Indian, Arctic, and Southern."
-    gold:
-      entities: ["Pacific", "Atlantic", "Indian", "Arctic", "Southern"]
-  - id: extraction-7
-    input: "Shakespeare wrote Hamlet, Macbeth, and Othello."
-    gold:
-      entities: ["Shakespeare", "Hamlet", "Macbeth", "Othello"]
-  - id: extraction-8
-    input: "Pluto and its moon Charon orbit beyond Neptune."
-    gold:
-      entities: ["Pluto", "Charon", "Neptune"]
-  - id: extraction-9
-    input: "Saturn is famed for its rings and its largest moon Titan."
-    gold:
-      entities: ["Saturn", "rings", "Titan"]
-  - id: extraction-10
-    input: "Einstein won the Nobel for the photoelectric effect, not relativity."
-    gold:
-      entities: ["Einstein", "relativity", "photoelectric"]
+- id: extraction-1
+  input: The Eiffel Tower stands in Paris, the capital of France.
+  gold:
+    entities:
+    - Eiffel Tower
+    - Paris
+    - France
+- id: extraction-2
+  input: Apollo 11 carried Neil Armstrong and Buzz Aldrin to the Moon in 1969.
+  gold:
+    entities:
+    - Apollo 11
+    - Neil Armstrong
+    - Buzz Aldrin
+    - Moon
+- id: extraction-3
+  input: Marie Curie discovered radium and polonium in the late nineteenth century.
+  gold:
+    entities:
+    - Marie Curie
+    - radium
+    - polonium
+- id: extraction-4
+  input: Mount Everest sits on the border between Nepal and Tibet.
+  gold:
+    entities:
+    - Mount Everest
+    - Nepal
+    - Tibet
+- id: extraction-5
+  input: Carbon allotropes include graphite and diamond.
+  gold:
+    entities:
+    - carbon
+    - graphite
+    - diamond
+- id: extraction-6
+  input: 'Earth has five oceans: Pacific, Atlantic, Indian, Arctic, and Southern.'
+  gold:
+    entities:
+    - Pacific
+    - Atlantic
+    - Indian
+    - Arctic
+    - Southern
+- id: extraction-7
+  input: Shakespeare wrote Hamlet, Macbeth, and Othello.
+  gold:
+    entities:
+    - Shakespeare
+    - Hamlet
+    - Macbeth
+    - Othello
+- id: extraction-8
+  input: Pluto and its moon Charon orbit beyond Neptune.
+  gold:
+    entities:
+    - Pluto
+    - Charon
+    - Neptune
+- id: extraction-9
+  input: Saturn is famed for its rings and its largest moon Titan.
+  gold:
+    entities:
+    - Saturn
+    - rings
+    - Titan
+- id: extraction-10
+  input: Einstein won the Nobel for the photoelectric effect, not relativity.
+  gold:
+    entities:
+    - Einstein
+    - relativity
+    - photoelectric
+- id: extraction-syn-001
+  input: Allison Hill traveled from East Jill in Philippines to study Sit.
+  gold:
+    entities:
+    - Allison Hill
+    - East Jill
+    - Philippines
+    - Sit
+- id: extraction-syn-002
+  input: Angie Henderson traveled from North Jefferyhaven in Netherlands to study
+    Agreement.
+  gold:
+    entities:
+    - Angie Henderson
+    - North Jefferyhaven
+    - Netherlands
+    - Agreement
+- id: extraction-syn-003
+  input: Michelle Miles traveled from Robinsonshire in Fiji to study Table.
+  gold:
+    entities:
+    - Michelle Miles
+    - Robinsonshire
+    - Fiji
+    - Table
+- id: extraction-syn-004
+  input: Olivia Moore traveled from Petersonberg in Cuba to study Source.
+  gold:
+    entities:
+    - Olivia Moore
+    - Petersonberg
+    - Cuba
+    - Source
+- id: extraction-syn-005
+  input: Brandon Davis traveled from Cassandraton in Saint Lucia to study Machine.
+  gold:
+    entities:
+    - Brandon Davis
+    - Cassandraton
+    - Saint Lucia
+    - Machine
+- id: extraction-syn-006
+  input: Valerie Gray traveled from Mariastad in Morocco to study Dark.
+  gold:
+    entities:
+    - Valerie Gray
+    - Mariastad
+    - Morocco
+    - Dark
+- id: extraction-syn-007
+  input: Amber Perez traveled from Traciebury in Tonga to study Blood.
+  gold:
+    entities:
+    - Amber Perez
+    - Traciebury
+    - Tonga
+    - Blood
+- id: extraction-syn-008
+  input: Jesse Flowers traveled from West Michael in Paraguay to study Example.
+  gold:
+    entities:
+    - Jesse Flowers
+    - West Michael
+    - Paraguay
+    - Example
+- id: extraction-syn-009
+  input: Melinda Jones traveled from New Jessica in Central African Republic to study
+    Maintain.
+  gold:
+    entities:
+    - Melinda Jones
+    - New Jessica
+    - Central African Republic
+    - Maintain
+- id: extraction-syn-010
+  input: William Bowman traveled from Lake Mark in Seychelles to study Stand.
+  gold:
+    entities:
+    - William Bowman
+    - Lake Mark
+    - Seychelles
+    - Stand
+- id: extraction-syn-011
+  input: Rodney Trujillo traveled from Adamsborough in United States Minor Outlying
+    Islands to study Yes.
+  gold:
+    entities:
+    - Rodney Trujillo
+    - Adamsborough
+    - United States Minor Outlying Islands
+    - 'Yes'
+- id: extraction-syn-012
+  input: Michelle Lewis traveled from Fostermouth in Cambodia to study Evidence.
+  gold:
+    entities:
+    - Michelle Lewis
+    - Fostermouth
+    - Cambodia
+    - Evidence
+- id: extraction-syn-013
+  input: Patrick Ryan traveled from Hurstfurt in Guyana to study Discuss.
+  gold:
+    entities:
+    - Patrick Ryan
+    - Hurstfurt
+    - Guyana
+    - Discuss
+- id: extraction-syn-014
+  input: Brenda Snyder PhD traveled from East Courtneychester in Nepal to study Attack.
+  gold:
+    entities:
+    - Brenda Snyder PhD
+    - East Courtneychester
+    - Nepal
+    - Attack
+- id: extraction-syn-015
+  input: Kyle Mcdonald traveled from Tashatown in Pitcairn Islands to study Set.
+  gold:
+    entities:
+    - Kyle Mcdonald
+    - Tashatown
+    - Pitcairn Islands
+    - Set
+- id: extraction-syn-016
+  input: Stephen Potter traveled from Danielchester in Cayman Islands to study Long.
+  gold:
+    entities:
+    - Stephen Potter
+    - Danielchester
+    - Cayman Islands
+    - Long
+- id: extraction-syn-017
+  input: Nathan Cortez traveled from New Rita in Trinidad and Tobago to study Process.
+  gold:
+    entities:
+    - Nathan Cortez
+    - New Rita
+    - Trinidad and Tobago
+    - Process
+- id: extraction-syn-018
+  input: Mark Lynch traveled from West Kathryn in Mauritius to study Start.
+  gold:
+    entities:
+    - Mark Lynch
+    - West Kathryn
+    - Mauritius
+    - Start
+- id: extraction-syn-019
+  input: Tamara George traveled from Smithstad in Turkey to study Theory.
+  gold:
+    entities:
+    - Tamara George
+    - Smithstad
+    - Turkey
+    - Theory
+- id: extraction-syn-020
+  input: Cynthia Allen traveled from North Jessicaland in Senegal to study No.
+  gold:
+    entities:
+    - Cynthia Allen
+    - North Jessicaland
+    - Senegal
+    - 'No'
+- id: extraction-syn-021
+  input: Betty Alvarez traveled from West Allison in New Caledonia to study Land.
+  gold:
+    entities:
+    - Betty Alvarez
+    - West Allison
+    - New Caledonia
+    - Land
+- id: extraction-syn-022
+  input: Tanya Campos traveled from Lake Larry in Paraguay to study Rate.
+  gold:
+    entities:
+    - Tanya Campos
+    - Lake Larry
+    - Paraguay
+    - Rate
+- id: extraction-syn-023
+  input: Steven Hayes traveled from East Caleb in Angola to study Per.
+  gold:
+    entities:
+    - Steven Hayes
+    - East Caleb
+    - Angola
+    - Per
+- id: extraction-syn-024
+  input: Leah Smith traveled from East Carloston in Tokelau to study Give.
+  gold:
+    entities:
+    - Leah Smith
+    - East Carloston
+    - Tokelau
+    - Give
+- id: extraction-syn-025
+  input: David Caldwell traveled from New David in Vietnam to study Us.
+  gold:
+    entities:
+    - David Caldwell
+    - New David
+    - Vietnam
+    - Us
+- id: extraction-syn-026
+  input: Kaitlyn Mueller traveled from Leeville in Palestinian Territory to study
+    Lawyer.
+  gold:
+    entities:
+    - Kaitlyn Mueller
+    - Leeville
+    - Palestinian Territory
+    - Lawyer
+- id: extraction-syn-027
+  input: Jason Shields traveled from Lake Deniseville in Bahamas to study Interesting.
+  gold:
+    entities:
+    - Jason Shields
+    - Lake Deniseville
+    - Bahamas
+    - Interesting
+- id: extraction-syn-028
+  input: Rebecca Rodriguez traveled from East Amanda in Burundi to study Knowledge.
+  gold:
+    entities:
+    - Rebecca Rodriguez
+    - East Amanda
+    - Burundi
+    - Knowledge
+- id: extraction-syn-029
+  input: Joel Baxter traveled from South Lindseyside in Bolivia to study Apply.
+  gold:
+    entities:
+    - Joel Baxter
+    - South Lindseyside
+    - Bolivia
+    - Apply
+- id: extraction-syn-030
+  input: Kimberly Smith traveled from Port Melindaburgh in Ireland to study Mention.
+  gold:
+    entities:
+    - Kimberly Smith
+    - Port Melindaburgh
+    - Ireland
+    - Mention
+- id: extraction-syn-031
+  input: Dr. Steven Martin traveled from South Josephmouth in France to study Land.
+  gold:
+    entities:
+    - Dr. Steven Martin
+    - South Josephmouth
+    - France
+    - Land
+- id: extraction-syn-032
+  input: Monica Logan traveled from Mooreport in Cuba to study Article.
+  gold:
+    entities:
+    - Monica Logan
+    - Mooreport
+    - Cuba
+    - Article
+- id: extraction-syn-033
+  input: Kimberly Adkins traveled from North Breannahaven in Uruguay to study Tonight.
+  gold:
+    entities:
+    - Kimberly Adkins
+    - North Breannahaven
+    - Uruguay
+    - Tonight
+- id: extraction-syn-034
+  input: Amy Romero traveled from North Brooke in Peru to study Training.
+  gold:
+    entities:
+    - Amy Romero
+    - North Brooke
+    - Peru
+    - Training
+- id: extraction-syn-035
+  input: Bryan Zamora traveled from New Brooke in Niger to study Beat.
+  gold:
+    entities:
+    - Bryan Zamora
+    - New Brooke
+    - Niger
+    - Beat
+- id: extraction-syn-036
+  input: Kevin Mills traveled from Jamesmouth in Dominican Republic to study Evidence.
+  gold:
+    entities:
+    - Kevin Mills
+    - Jamesmouth
+    - Dominican Republic
+    - Evidence
+- id: extraction-syn-037
+  input: Michael Evans traveled from Sarahland in Algeria to study Low.
+  gold:
+    entities:
+    - Michael Evans
+    - Sarahland
+    - Algeria
+    - Low
+- id: extraction-syn-038
+  input: Kristine Garcia traveled from New Joseph in Venezuela to study Happy.
+  gold:
+    entities:
+    - Kristine Garcia
+    - New Joseph
+    - Venezuela
+    - Happy
+- id: extraction-syn-039
+  input: Sherry Wood traveled from South Martha in Romania to study Five.
+  gold:
+    entities:
+    - Sherry Wood
+    - South Martha
+    - Romania
+    - Five
+- id: extraction-syn-040
+  input: Victoria Valdez traveled from Lake Lisaport in Venezuela to study Record.
+  gold:
+    entities:
+    - Victoria Valdez
+    - Lake Lisaport
+    - Venezuela
+    - Record
+- id: extraction-syn-041
+  input: Shawn Baker traveled from Lake Angelaview in Finland to study Point.
+  gold:
+    entities:
+    - Shawn Baker
+    - Lake Angelaview
+    - Finland
+    - Point
+- id: extraction-syn-042
+  input: Grant Watts traveled from Williamview in United Kingdom to study Whatever.
+  gold:
+    entities:
+    - Grant Watts
+    - Williamview
+    - United Kingdom
+    - Whatever
+- id: extraction-syn-043
+  input: Anna Henderson traveled from Bradleymouth in Sierra Leone to study Case.
+  gold:
+    entities:
+    - Anna Henderson
+    - Bradleymouth
+    - Sierra Leone
+    - Case
+- id: extraction-syn-044
+  input: Deborah Figueroa traveled from Hoffmanville in Belarus to study You.
+  gold:
+    entities:
+    - Deborah Figueroa
+    - Hoffmanville
+    - Belarus
+    - You
+- id: extraction-syn-045
+  input: Stephanie Gardner traveled from Brandiberg in Jersey to study Care.
+  gold:
+    entities:
+    - Stephanie Gardner
+    - Brandiberg
+    - Jersey
+    - Care
+- id: extraction-syn-046
+  input: Jacob Fitzpatrick traveled from West Jasonbury in Papua New Guinea to study
+    Board.
+  gold:
+    entities:
+    - Jacob Fitzpatrick
+    - West Jasonbury
+    - Papua New Guinea
+    - Board
+- id: extraction-syn-047
+  input: Justin Baxter traveled from East Michelle in South Georgia and the South
+    Sandwich Islands to study Talk.
+  gold:
+    entities:
+    - Justin Baxter
+    - East Michelle
+    - South Georgia and the South Sandwich Islands
+    - Talk
+- id: extraction-syn-048
+  input: Jason White traveled from Kimberlychester in Spain to study Relationship.
+  gold:
+    entities:
+    - Jason White
+    - Kimberlychester
+    - Spain
+    - Relationship
+- id: extraction-syn-049
+  input: Rita Adams traveled from South Monicafort in Cyprus to study Decision.
+  gold:
+    entities:
+    - Rita Adams
+    - South Monicafort
+    - Cyprus
+    - Decision
+- id: extraction-syn-050
+  input: Julia Torres traveled from East Andrew in Congo to study Inside.
+  gold:
+    entities:
+    - Julia Torres
+    - East Andrew
+    - Congo
+    - Inside
+- id: extraction-syn-051
+  input: Sean Rasmussen traveled from Michaelhaven in Iran to study Respond.
+  gold:
+    entities:
+    - Sean Rasmussen
+    - Michaelhaven
+    - Iran
+    - Respond
+- id: extraction-syn-052
+  input: Ms. Teresa Wilson traveled from Gregoryview in Argentina to study Boy.
+  gold:
+    entities:
+    - Ms. Teresa Wilson
+    - Gregoryview
+    - Argentina
+    - Boy
+- id: extraction-syn-053
+  input: Haley Hartman traveled from Obrienhaven in Brazil to study Image.
+  gold:
+    entities:
+    - Haley Hartman
+    - Obrienhaven
+    - Brazil
+    - Image
+- id: extraction-syn-054
+  input: Cheryl Williams traveled from Smithside in Poland to study Serve.
+  gold:
+    entities:
+    - Cheryl Williams
+    - Smithside
+    - Poland
+    - Serve
+- id: extraction-syn-055
+  input: Nancy Gonzalez traveled from Jonesmouth in Nigeria to study Former.
+  gold:
+    entities:
+    - Nancy Gonzalez
+    - Jonesmouth
+    - Nigeria
+    - Former
+- id: extraction-syn-056
+  input: Belinda Mccullough traveled from Elizabethmouth in Iraq to study Same.
+  gold:
+    entities:
+    - Belinda Mccullough
+    - Elizabethmouth
+    - Iraq
+    - Same
+- id: extraction-syn-057
+  input: Cameron Fisher traveled from Byrdburgh in Nicaragua to study Outside.
+  gold:
+    entities:
+    - Cameron Fisher
+    - Byrdburgh
+    - Nicaragua
+    - Outside
+- id: extraction-syn-058
+  input: Joshua Smith traveled from Jasonshire in New Caledonia to study Real.
+  gold:
+    entities:
+    - Joshua Smith
+    - Jasonshire
+    - New Caledonia
+    - Real
+- id: extraction-syn-059
+  input: Jeremy Lowe traveled from Leonburgh in Palestinian Territory to study Become.
+  gold:
+    entities:
+    - Jeremy Lowe
+    - Leonburgh
+    - Palestinian Territory
+    - Become
+- id: extraction-syn-060
+  input: Matthew Harvey traveled from Port Stephaniebury in Peru to study Force.
+  gold:
+    entities:
+    - Matthew Harvey
+    - Port Stephaniebury
+    - Peru
+    - Force
+- id: extraction-syn-061
+  input: Curtis Johnson traveled from South Cheryl in Seychelles to study Baby.
+  gold:
+    entities:
+    - Curtis Johnson
+    - South Cheryl
+    - Seychelles
+    - Baby
+- id: extraction-syn-062
+  input: Stephen Johnston traveled from Snyderbury in Cameroon to study Reality.
+  gold:
+    entities:
+    - Stephen Johnston
+    - Snyderbury
+    - Cameroon
+    - Reality
+- id: extraction-syn-063
+  input: Stephanie Dalton traveled from Port Ronaldburgh in Spain to study Safe.
+  gold:
+    entities:
+    - Stephanie Dalton
+    - Port Ronaldburgh
+    - Spain
+    - Safe
+- id: extraction-syn-064
+  input: Amber Wright traveled from South Dennismouth in Papua New Guinea to study
+    Nice.
+  gold:
+    entities:
+    - Amber Wright
+    - South Dennismouth
+    - Papua New Guinea
+    - Nice
+- id: extraction-syn-065
+  input: Linda Dodson DVM traveled from Rivasside in Kiribati to study Watch.
+  gold:
+    entities:
+    - Linda Dodson DVM
+    - Rivasside
+    - Kiribati
+    - Watch
+- id: extraction-syn-066
+  input: Scott Cole traveled from Port Dana in Seychelles to study Star.
+  gold:
+    entities:
+    - Scott Cole
+    - Port Dana
+    - Seychelles
+    - Star
+- id: extraction-syn-067
+  input: Lori Hill traveled from Lake Justinview in Grenada to study Front.
+  gold:
+    entities:
+    - Lori Hill
+    - Lake Justinview
+    - Grenada
+    - Front
+- id: extraction-syn-068
+  input: Angela Hernandez traveled from Bensonborough in Bahrain to study Join.
+  gold:
+    entities:
+    - Angela Hernandez
+    - Bensonborough
+    - Bahrain
+    - Join
+- id: extraction-syn-069
+  input: Joshua Perry traveled from Port Robert in United Kingdom to study Speech.
+  gold:
+    entities:
+    - Joshua Perry
+    - Port Robert
+    - United Kingdom
+    - Speech
+- id: extraction-syn-070
+  input: Melissa Gates traveled from Woodsstad in French Southern Territories to study
+    Some.
+  gold:
+    entities:
+    - Melissa Gates
+    - Woodsstad
+    - French Southern Territories
+    - Some
+- id: extraction-syn-071
+  input: Steven Houston traveled from South Jeffrey in Jordan to study Mention.
+  gold:
+    entities:
+    - Steven Houston
+    - South Jeffrey
+    - Jordan
+    - Mention
+- id: extraction-syn-072
+  input: George Shelton traveled from Ramseymouth in Uruguay to study Care.
+  gold:
+    entities:
+    - George Shelton
+    - Ramseymouth
+    - Uruguay
+    - Care
+- id: extraction-syn-073
+  input: Ms. Susan Vargas traveled from North Dawnberg in Tonga to study Main.
+  gold:
+    entities:
+    - Ms. Susan Vargas
+    - North Dawnberg
+    - Tonga
+    - Main
+- id: extraction-syn-074
+  input: David Murphy traveled from Murphyfurt in Fiji to study Soldier.
+  gold:
+    entities:
+    - David Murphy
+    - Murphyfurt
+    - Fiji
+    - Soldier
+- id: extraction-syn-075
+  input: Jennifer Conley traveled from Smithside in Austria to study Hard.
+  gold:
+    entities:
+    - Jennifer Conley
+    - Smithside
+    - Austria
+    - Hard
+- id: extraction-syn-076
+  input: Barry Bernard traveled from Port Anthonybury in Cook Islands to study Those.
+  gold:
+    entities:
+    - Barry Bernard
+    - Port Anthonybury
+    - Cook Islands
+    - Those
+- id: extraction-syn-077
+  input: Christian Martinez traveled from New Staciemouth in Reunion to study Establish.
+  gold:
+    entities:
+    - Christian Martinez
+    - New Staciemouth
+    - Reunion
+    - Establish
+- id: extraction-syn-078
+  input: Carol Lawson traveled from Port Loriport in Botswana to study Particular.
+  gold:
+    entities:
+    - Carol Lawson
+    - Port Loriport
+    - Botswana
+    - Particular
+- id: extraction-syn-079
+  input: Eric Byrd traveled from Sandersborough in Belarus to study Person.
+  gold:
+    entities:
+    - Eric Byrd
+    - Sandersborough
+    - Belarus
+    - Person
+- id: extraction-syn-080
+  input: Lori Garcia traveled from Melissaville in South Africa to study Others.
+  gold:
+    entities:
+    - Lori Garcia
+    - Melissaville
+    - South Africa
+    - Others
+- id: extraction-syn-081
+  input: Hannah Patterson traveled from Caseymouth in American Samoa to study Time.
+  gold:
+    entities:
+    - Hannah Patterson
+    - Caseymouth
+    - American Samoa
+    - Time
+- id: extraction-syn-082
+  input: John Hamilton traveled from Cynthiamouth in Russian Federation to study Claim.
+  gold:
+    entities:
+    - John Hamilton
+    - Cynthiamouth
+    - Russian Federation
+    - Claim
+- id: extraction-syn-083
+  input: Nicholas Sheppard traveled from Christinaside in Singapore to study Member.
+  gold:
+    entities:
+    - Nicholas Sheppard
+    - Christinaside
+    - Singapore
+    - Member
+- id: extraction-syn-084
+  input: Roger Vargas traveled from Melissaland in Fiji to study Upon.
+  gold:
+    entities:
+    - Roger Vargas
+    - Melissaland
+    - Fiji
+    - Upon
+- id: extraction-syn-085
+  input: Paul Hudson traveled from Rogersfort in Thailand to study Garden.
+  gold:
+    entities:
+    - Paul Hudson
+    - Rogersfort
+    - Thailand
+    - Garden
+- id: extraction-syn-086
+  input: Daniel Salinas traveled from Joshuaview in Moldova to study Action.
+  gold:
+    entities:
+    - Daniel Salinas
+    - Joshuaview
+    - Moldova
+    - Action
+- id: extraction-syn-087
+  input: Cheryl Allen traveled from Freemanbury in Portugal to study Maybe.
+  gold:
+    entities:
+    - Cheryl Allen
+    - Freemanbury
+    - Portugal
+    - Maybe
+- id: extraction-syn-088
+  input: Katherine Mcguire traveled from West Jeffreybury in Gambia to study Record.
+  gold:
+    entities:
+    - Katherine Mcguire
+    - West Jeffreybury
+    - Gambia
+    - Record
+- id: extraction-syn-089
+  input: Kara Schmidt traveled from Barajasside in Greenland to study He.
+  gold:
+    entities:
+    - Kara Schmidt
+    - Barajasside
+    - Greenland
+    - He
+- id: extraction-syn-090
+  input: Denise King traveled from Lake Jamesville in Samoa to study North.
+  gold:
+    entities:
+    - Denise King
+    - Lake Jamesville
+    - Samoa
+    - North

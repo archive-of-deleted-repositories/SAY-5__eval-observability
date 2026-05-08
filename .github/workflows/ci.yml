@@ -81,6 +81,20 @@ jobs:
       - name: full suite vs committed baseline
         run: poetry run eval-obs run --suite core_v1 --provider fake --model fake-large --smoke
 
+  bench-regress:
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install poetry==1.8.3
+      - run: poetry install --with dev
+      - name: init schema
+        run: poetry run python -m eval_observability.cli init
+      - name: per-category pass-rate drift gate (30%)
+        run: poetry run python -m scripts.bench_regress
+
   cron-smoke:
     runs-on: ubuntu-latest
     needs: [lint, typecheck]
@@ -136,7 +150,7 @@ jobs:
 
   build-image:
     runs-on: ubuntu-latest
-    needs: [test, eval-smoke, cron-smoke]
+    needs: [test, eval-smoke, cron-smoke, bench-regress]
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4

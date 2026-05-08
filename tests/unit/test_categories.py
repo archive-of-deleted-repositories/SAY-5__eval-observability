@@ -19,9 +19,9 @@ from eval_observability.categories._base import Example
 SUITE = Path("eval/suites/core_v1")
 
 
-def test_extraction_loads_ten_examples() -> None:
+def test_extraction_loads_one_hundred_examples() -> None:
     items = extraction.load_suite(SUITE / "extraction.yaml")
-    assert len(items) == 10
+    assert len(items) == 100
     assert items[0].category == "extraction"
 
 
@@ -48,9 +48,9 @@ def test_extraction_score_partial() -> None:
     assert 0 < res.score < 1
 
 
-def test_classification_loads_ten_examples() -> None:
+def test_classification_loads_one_hundred_examples() -> None:
     items = classification.load_suite(SUITE / "classification.yaml")
-    assert len(items) == 10
+    assert len(items) == 100
     assert "positive" in items[0].gold["labels"]
 
 
@@ -170,7 +170,7 @@ def test_instruction_following_score() -> None:
     "module",
     [extraction, classification, summarization, reasoning, code, instruction_following],
 )
-def test_each_suite_has_ten_examples(module: object) -> None:
+def test_each_suite_has_one_hundred_examples(module: object) -> None:
     path = SUITE / f"{module.name}.yaml"  # type: ignore[attr-defined]
     items = module.load_suite(path)  # type: ignore[attr-defined]
-    assert len(items) == 10
+    assert len(items) == 100

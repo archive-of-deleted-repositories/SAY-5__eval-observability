@@ -2,53 +2,503 @@ name: reasoning
 version: core_v1
 description: Multi-step arithmetic word problems; final answer required.
 examples:
-  - id: reasoning-1
-    input: "Multiply twelve by four, then add seven. What do you get?"
-    gold:
-      answer: "55"
-      expected_steps: 2
-  - id: reasoning-2
-    input: "Subtract 37 from 100, then divide the result by 9."
-    gold:
-      answer: "7"
-      expected_steps: 2
-  - id: reasoning-3
-    input: "What is five to the power of three?"
-    gold:
-      answer: "125"
-      expected_steps: 1
-  - id: reasoning-4
-    input: "Three trains leave a station every 12 minutes. How many trains in two hours?"
-    gold:
-      answer: "10"
-      expected_steps: 2
-  - id: reasoning-5
-    input: "Add 8 and 12, then triple the result."
-    gold:
-      answer: "60"
-      expected_steps: 2
-  - id: reasoning-6
-    input: "If 144 cookies are split evenly into 12 boxes, how many per box?"
-    gold:
-      answer: "12"
-      expected_steps: 1
-  - id: reasoning-7
-    input: "Seven groups of eight — what is the total?"
-    gold:
-      answer: "56"
-      expected_steps: 1
-  - id: reasoning-8
-    input: "What is the square of 25?"
-    gold:
-      answer: "625"
-      expected_steps: 1
-  - id: reasoning-9
-    input: "From 1000, subtract 250, then divide by 5."
-    gold:
-      answer: "150"
-      expected_steps: 2
-  - id: reasoning-10
-    input: "Compute nine times nine, then add nineteen."
-    gold:
-      answer: "100"
-      expected_steps: 2
+- id: reasoning-1
+  input: Multiply twelve by four, then add seven. What do you get?
+  gold:
+    answer: '55'
+    expected_steps: 2
+- id: reasoning-2
+  input: Subtract 37 from 100, then divide the result by 9.
+  gold:
+    answer: '7'
+    expected_steps: 2
+- id: reasoning-3
+  input: What is five to the power of three?
+  gold:
+    answer: '125'
+    expected_steps: 1
+- id: reasoning-4
+  input: Three trains leave a station every 12 minutes. How many trains in two hours?
+  gold:
+    answer: '10'
+    expected_steps: 2
+- id: reasoning-5
+  input: Add 8 and 12, then triple the result.
+  gold:
+    answer: '60'
+    expected_steps: 2
+- id: reasoning-6
+  input: If 144 cookies are split evenly into 12 boxes, how many per box?
+  gold:
+    answer: '12'
+    expected_steps: 1
+- id: reasoning-7
+  input: Seven groups of eight — what is the total?
+  gold:
+    answer: '56'
+    expected_steps: 1
+- id: reasoning-8
+  input: What is the square of 25?
+  gold:
+    answer: '625'
+    expected_steps: 1
+- id: reasoning-9
+  input: From 1000, subtract 250, then divide by 5.
+  gold:
+    answer: '150'
+    expected_steps: 2
+- id: reasoning-10
+  input: Compute nine times nine, then add nineteen.
+  gold:
+    answer: '100'
+    expected_steps: 2
+- id: reasoning-syn-001
+  input: Compute 42 plus 9.
+  gold:
+    answer: '51'
+    expected_steps: 1
+- id: reasoning-syn-002
+  input: Compute 17 plus 16.
+  gold:
+    answer: '33'
+    expected_steps: 1
+- id: reasoning-syn-003
+  input: Compute 94 minus 45.
+  gold:
+    answer: '49'
+    expected_steps: 1
+- id: reasoning-syn-004
+  input: Compute 29 plus 4.
+  gold:
+    answer: '33'
+    expected_steps: 1
+- id: reasoning-syn-005
+  input: Compute 50 minus 16.
+  gold:
+    answer: '34'
+    expected_steps: 1
+- id: reasoning-syn-006
+  input: Compute 61 minus 14.
+  gold:
+    answer: '47'
+    expected_steps: 1
+- id: reasoning-syn-007
+  input: Multiply 28 by 16.
+  gold:
+    answer: '448'
+    expected_steps: 1
+- id: reasoning-syn-008
+  input: Compute 2 plus 50.
+  gold:
+    answer: '52'
+    expected_steps: 1
+- id: reasoning-syn-009
+  input: Compute 23 plus 19.
+  gold:
+    answer: '42'
+    expected_steps: 1
+- id: reasoning-syn-010
+  input: Compute 50 plus 23.
+  gold:
+    answer: '73'
+    expected_steps: 1
+- id: reasoning-syn-011
+  input: Multiply 8 by 24.
+  gold:
+    answer: '192'
+    expected_steps: 1
+- id: reasoning-syn-012
+  input: Multiply 4 by 48.
+  gold:
+    answer: '192'
+    expected_steps: 1
+- id: reasoning-syn-013
+  input: Compute 33 minus 26.
+  gold:
+    answer: '7'
+    expected_steps: 1
+- id: reasoning-syn-014
+  input: Multiply 42 by 41.
+  gold:
+    answer: '1722'
+    expected_steps: 1
+- id: reasoning-syn-015
+  input: Compute 47 plus 6.
+  gold:
+    answer: '53'
+    expected_steps: 1
+- id: reasoning-syn-016
+  input: Compute 20 plus 7.
+  gold:
+    answer: '27'
+    expected_steps: 1
+- id: reasoning-syn-017
+  input: Multiply 26 by 19.
+  gold:
+    answer: '494'
+    expected_steps: 1
+- id: reasoning-syn-018
+  input: Multiply 25 by 12.
+  gold:
+    answer: '300'
+    expected_steps: 1
+- id: reasoning-syn-019
+  input: Compute 63 minus 44.
+  gold:
+    answer: '19'
+    expected_steps: 1
+- id: reasoning-syn-020
+  input: Compute 49 minus 43.
+  gold:
+    answer: '6'
+    expected_steps: 1
+- id: reasoning-syn-021
+  input: Compute 36 plus 48.
+  gold:
+    answer: '84'
+    expected_steps: 1
+- id: reasoning-syn-022
+  input: Compute 45 minus 26.
+  gold:
+    answer: '19'
+    expected_steps: 1
+- id: reasoning-syn-023
+  input: Multiply 16 by 45.
+  gold:
+    answer: '720'
+    expected_steps: 1
+- id: reasoning-syn-024
+  input: Compute 5 plus 16.
+  gold:
+    answer: '21'
+    expected_steps: 1
+- id: reasoning-syn-025
+  input: Compute 27 plus 19.
+  gold:
+    answer: '46'
+    expected_steps: 1
+- id: reasoning-syn-026
+  input: Multiply 38 by 47.
+  gold:
+    answer: '1786'
+    expected_steps: 1
+- id: reasoning-syn-027
+  input: Compute 60 minus 33.
+  gold:
+    answer: '27'
+    expected_steps: 1
+- id: reasoning-syn-028
+  input: Compute 18 plus 10.
+  gold:
+    answer: '28'
+    expected_steps: 1
+- id: reasoning-syn-029
+  input: Compute 54 minus 36.
+  gold:
+    answer: '18'
+    expected_steps: 1
+- id: reasoning-syn-030
+  input: Multiply 39 by 27.
+  gold:
+    answer: '1053'
+    expected_steps: 1
+- id: reasoning-syn-031
+  input: Multiply 10 by 34.
+  gold:
+    answer: '340'
+    expected_steps: 1
+- id: reasoning-syn-032
+  input: Compute 5 plus 9.
+  gold:
+    answer: '14'
+    expected_steps: 1
+- id: reasoning-syn-033
+  input: Compute 74 minus 45.
+  gold:
+    answer: '29'
+    expected_steps: 1
+- id: reasoning-syn-034
+  input: Multiply 26 by 40.
+  gold:
+    answer: '1040'
+    expected_steps: 1
+- id: reasoning-syn-035
+  input: Compute 39 minus 37.
+  gold:
+    answer: '2'
+    expected_steps: 1
+- id: reasoning-syn-036
+  input: Multiply 45 by 36.
+  gold:
+    answer: '1620'
+    expected_steps: 1
+- id: reasoning-syn-037
+  input: Multiply 23 by 9.
+  gold:
+    answer: '207'
+    expected_steps: 1
+- id: reasoning-syn-038
+  input: Compute 33 minus 31.
+  gold:
+    answer: '2'
+    expected_steps: 1
+- id: reasoning-syn-039
+  input: Compute 18 plus 34.
+  gold:
+    answer: '52'
+    expected_steps: 1
+- id: reasoning-syn-040
+  input: Multiply 8 by 42.
+  gold:
+    answer: '336'
+    expected_steps: 1
+- id: reasoning-syn-041
+  input: Compute 34 plus 40.
+  gold:
+    answer: '74'
+    expected_steps: 1
+- id: reasoning-syn-042
+  input: Compute 62 minus 50.
+  gold:
+    answer: '12'
+    expected_steps: 1
+- id: reasoning-syn-043
+  input: Compute 37 minus 35.
+  gold:
+    answer: '2'
+    expected_steps: 1
+- id: reasoning-syn-044
+  input: Multiply 3 by 9.
+  gold:
+    answer: '27'
+    expected_steps: 1
+- id: reasoning-syn-045
+  input: Compute 21 plus 17.
+  gold:
+    answer: '38'
+    expected_steps: 1
+- id: reasoning-syn-046
+  input: Compute 38 plus 7.
+  gold:
+    answer: '45'
+    expected_steps: 1
+- id: reasoning-syn-047
+  input: Compute 56 minus 6.
+  gold:
+    answer: '50'
+    expected_steps: 1
+- id: reasoning-syn-048
+  input: Multiply 10 by 44.
+  gold:
+    answer: '440'
+    expected_steps: 1
+- id: reasoning-syn-049
+  input: Compute 30 minus 12.
+  gold:
+    answer: '18'
+    expected_steps: 1
+- id: reasoning-syn-050
+  input: Compute 44 minus 29.
+  gold:
+    answer: '15'
+    expected_steps: 1
+- id: reasoning-syn-051
+  input: Compute 60 minus 46.
+  gold:
+    answer: '14'
+    expected_steps: 1
+- id: reasoning-syn-052
+  input: Multiply 44 by 43.
+  gold:
+    answer: '1892'
+    expected_steps: 1
+- id: reasoning-syn-053
+  input: Compute 35 plus 30.
+  gold:
+    answer: '65'
+    expected_steps: 1
+- id: reasoning-syn-054
+  input: Compute 6 plus 23.
+  gold:
+    answer: '29'
+    expected_steps: 1
+- id: reasoning-syn-055
+  input: Compute 16 plus 39.
+  gold:
+    answer: '55'
+    expected_steps: 1
+- id: reasoning-syn-056
+  input: Compute 47 plus 42.
+  gold:
+    answer: '89'
+    expected_steps: 1
+- id: reasoning-syn-057
+  input: Compute 4 plus 23.
+  gold:
+    answer: '27'
+    expected_steps: 1
+- id: reasoning-syn-058
+  input: Multiply 19 by 44.
+  gold:
+    answer: '836'
+    expected_steps: 1
+- id: reasoning-syn-059
+  input: Compute 58 minus 10.
+  gold:
+    answer: '48'
+    expected_steps: 1
+- id: reasoning-syn-060
+  input: Multiply 17 by 32.
+  gold:
+    answer: '544'
+    expected_steps: 1
+- id: reasoning-syn-061
+  input: Multiply 8 by 44.
+  gold:
+    answer: '352'
+    expected_steps: 1
+- id: reasoning-syn-062
+  input: Compute 59 minus 28.
+  gold:
+    answer: '31'
+    expected_steps: 1
+- id: reasoning-syn-063
+  input: Compute 43 plus 43.
+  gold:
+    answer: '86'
+    expected_steps: 1
+- id: reasoning-syn-064
+  input: Compute 48 plus 23.
+  gold:
+    answer: '71'
+    expected_steps: 1
+- id: reasoning-syn-065
+  input: Multiply 14 by 36.
+  gold:
+    answer: '504'
+    expected_steps: 1
+- id: reasoning-syn-066
+  input: Multiply 13 by 19.
+  gold:
+    answer: '247'
+    expected_steps: 1
+- id: reasoning-syn-067
+  input: Compute 36 minus 6.
+  gold:
+    answer: '30'
+    expected_steps: 1
+- id: reasoning-syn-068
+  input: Compute 43 plus 36.
+  gold:
+    answer: '79'
+    expected_steps: 1
+- id: reasoning-syn-069
+  input: Compute 50 plus 17.
+  gold:
+    answer: '67'
+    expected_steps: 1
+- id: reasoning-syn-070
+  input: Multiply 32 by 15.
+  gold:
+    answer: '480'
+    expected_steps: 1
+- id: reasoning-syn-071
+  input: Compute 12 plus 26.
+  gold:
+    answer: '38'
+    expected_steps: 1
+- id: reasoning-syn-072
+  input: Multiply 18 by 31.
+  gold:
+    answer: '558'
+    expected_steps: 1
+- id: reasoning-syn-073
+  input: Compute 85 minus 48.
+  gold:
+    answer: '37'
+    expected_steps: 1
+- id: reasoning-syn-074
+  input: Multiply 11 by 14.
+  gold:
+    answer: '154'
+    expected_steps: 1
+- id: reasoning-syn-075
+  input: Compute 44 minus 5.
+  gold:
+    answer: '39'
+    expected_steps: 1
+- id: reasoning-syn-076
+  input: Compute 49 plus 22.
+  gold:
+    answer: '71'
+    expected_steps: 1
+- id: reasoning-syn-077
+  input: Compute 66 minus 32.
+  gold:
+    answer: '34'
+    expected_steps: 1
+- id: reasoning-syn-078
+  input: Compute 34 plus 7.
+  gold:
+    answer: '41'
+    expected_steps: 1
+- id: reasoning-syn-079
+  input: Compute 6 plus 45.
+  gold:
+    answer: '51'
+    expected_steps: 1
+- id: reasoning-syn-080
+  input: Compute 55 minus 38.
+  gold:
+    answer: '17'
+    expected_steps: 1
+- id: reasoning-syn-081
+  input: Multiply 41 by 7.
+  gold:
+    answer: '287'
+    expected_steps: 1
+- id: reasoning-syn-082
+  input: Multiply 38 by 35.
+  gold:
+    answer: '1330'
+    expected_steps: 1
+- id: reasoning-syn-083
+  input: Compute 59 minus 15.
+  gold:
+    answer: '44'
+    expected_steps: 1
+- id: reasoning-syn-084
+  input: Compute 18 plus 27.
+  gold:
+    answer: '45'
+    expected_steps: 1
+- id: reasoning-syn-085
+  input: Multiply 21 by 31.
+  gold:
+    answer: '651'
+    expected_steps: 1
+- id: reasoning-syn-086
+  input: Multiply 6 by 2.
+  gold:
+    answer: '12'
+    expected_steps: 1
+- id: reasoning-syn-087
+  input: Compute 38 plus 8.
+  gold:
+    answer: '46'
+    expected_steps: 1
+- id: reasoning-syn-088
+  input: Compute 34 plus 18.
+  gold:
+    answer: '52'
+    expected_steps: 1
+- id: reasoning-syn-089
+  input: Multiply 6 by 17.
+  gold:
+    answer: '102'
+    expected_steps: 1
+- id: reasoning-syn-090
+  input: Compute 66 minus 30.
+  gold:
+    answer: '36'
+    expected_steps: 1

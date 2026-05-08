@@ -2,69 +2,1380 @@ name: instruction_following
 version: core_v1
 description: Multi-constraint instructions; structural assertions on the JSON output.
 examples:
-  - id: instruction_following-1
-    input: "Reply with a JSON object having keys A (string), B (string with exactly 3 sentences), and C (integer)."
-    gold:
-      json_only: true
-      required_keys: ["A", "B", "C"]
-      sentence_count: { "B": 3 }
-      value_types: { "A": "str", "C": "int" }
-  - id: instruction_following-2
-    input: "Reply with JSON keys A, B, C only. B must contain exactly 3 sentences. C must be an integer."
-    gold:
-      json_only: true
-      required_keys: ["A", "B", "C"]
-      sentence_count: { "B": 3 }
-      value_types: { "C": "int" }
-  - id: instruction_following-3
-    input: "Output strictly JSON: {A: string, B: 3-sentence string, C: integer}."
-    gold:
-      json_only: true
-      required_keys: ["A", "B", "C"]
-      sentence_count: { "B": 3 }
-      value_types: { "C": "int" }
-  - id: instruction_following-4
-    input: "Provide a JSON object with the keys A, B, and C. B should have exactly three sentences."
-    gold:
-      json_only: true
-      required_keys: ["A", "B", "C"]
-      sentence_count: { "B": 3 }
-  - id: instruction_following-5
-    input: "JSON only. Keys: A, B, C. B is a 3-sentence string. C is an integer."
-    gold:
-      json_only: true
-      required_keys: ["A", "B", "C"]
-      sentence_count: { "B": 3 }
-      value_types: { "C": "int" }
-  - id: instruction_following-6
-    input: "Return a JSON object with keys A, B, and C. Field B must be exactly three sentences long."
-    gold:
-      json_only: true
-      required_keys: ["A", "B", "C"]
-      sentence_count: { "B": 3 }
-  - id: instruction_following-7
-    input: "JSON only. Required keys: A, B, C. B is three sentences. C is an integer."
-    gold:
-      json_only: true
-      required_keys: ["A", "B", "C"]
-      sentence_count: { "B": 3 }
-      value_types: { "C": "int" }
-  - id: instruction_following-8
-    input: "Output a JSON object {A, B, C}. B = three sentences."
-    gold:
-      json_only: true
-      required_keys: ["A", "B", "C"]
-      sentence_count: { "B": 3 }
-  - id: instruction_following-9
-    input: "Reply with JSON. Keys A, B, C. B has three sentences. C is an int."
-    gold:
-      json_only: true
-      required_keys: ["A", "B", "C"]
-      sentence_count: { "B": 3 }
-      value_types: { "C": "int" }
-  - id: instruction_following-10
-    input: "JSON only. Keys A, B, C. B contains exactly three sentences."
-    gold:
-      json_only: true
-      required_keys: ["A", "B", "C"]
-      sentence_count: { "B": 3 }
+- id: instruction_following-1
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-2
+  input: Reply with JSON keys A, B, C only. B must contain exactly 3 sentences. C
+    must be an integer.
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      C: int
+- id: instruction_following-3
+  input: 'Output strictly JSON: {A: string, B: 3-sentence string, C: integer}.'
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      C: int
+- id: instruction_following-4
+  input: Provide a JSON object with the keys A, B, and C. B should have exactly three
+    sentences.
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+- id: instruction_following-5
+  input: 'JSON only. Keys: A, B, C. B is a 3-sentence string. C is an integer.'
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      C: int
+- id: instruction_following-6
+  input: Return a JSON object with keys A, B, and C. Field B must be exactly three
+    sentences long.
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+- id: instruction_following-7
+  input: 'JSON only. Required keys: A, B, C. B is three sentences. C is an integer.'
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      C: int
+- id: instruction_following-8
+  input: Output a JSON object {A, B, C}. B = three sentences.
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+- id: instruction_following-9
+  input: Reply with JSON. Keys A, B, C. B has three sentences. C is an int.
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      C: int
+- id: instruction_following-10
+  input: JSON only. Keys A, B, C. B contains exactly three sentences.
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+- id: instruction_following-syn-001
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-002
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-003
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-004
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-005
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-006
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-007
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-008
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-009
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-010
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-011
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-012
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-013
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-014
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-015
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-016
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-017
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-018
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-019
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-020
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-021
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-022
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-023
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-024
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-025
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-026
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-027
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-028
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-029
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-030
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-031
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-032
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-033
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-034
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-035
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-036
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-037
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-038
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-039
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-040
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-041
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-042
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-043
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-044
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-045
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-046
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-047
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-048
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-049
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-050
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-051
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-052
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-053
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-054
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-055
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-056
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-057
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-058
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-059
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-060
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-061
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-062
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-063
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-064
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-065
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-066
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-067
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-068
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-069
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-070
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-071
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-072
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-073
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-074
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-075
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-076
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-077
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-078
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-079
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-080
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-081
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-082
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-083
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-084
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-085
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-086
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-087
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-088
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-089
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int
+- id: instruction_following-syn-090
+  input: Reply with a JSON object having keys A (string), B (string with exactly 3
+    sentences), and C (integer).
+  gold:
+    json_only: true
+    required_keys:
+    - A
+    - B
+    - C
+    sentence_count:
+      B: 3
+    value_types:
+      A: str
+      C: int

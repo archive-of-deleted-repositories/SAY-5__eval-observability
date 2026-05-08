@@ -33,7 +33,7 @@ def test_full_suite_then_cron(fresh_db, trace_handle, tmp_path: Path) -> None:
             provider=FakeProvider(),
             model="fake-large",
         )
-    assert summary.total_examples == 60
+    assert summary.total_examples == 600
 
     from eval_observability.models import Run, RunItem, Suite
 

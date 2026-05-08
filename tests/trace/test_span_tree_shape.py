@@ -21,19 +21,19 @@ def test_full_suite_span_tree(fresh_db, trace_handle) -> None:
             provider=FakeProvider(),
             model="fake-large",
         )
-    assert summary.total_examples == 60
+    assert summary.total_examples == 600
 
     spans = trace_handle.finished_spans()
     by_name: dict[str, list] = {}
     for sp in spans:
         by_name.setdefault(sp.name, []).append(sp)
 
-    # Expected counts: 1 suite, 6 categories, 60 example_run, 60 llm_call, 60 score.
+    # Expected counts: 1 suite, 6 categories, 600 example_run, 600 llm_call, 600 score.
     assert len(by_name["suite_run"]) == 1
     assert len(by_name["category_run"]) == 6
-    assert len(by_name["example_run"]) == 60
-    assert len(by_name["llm_call"]) == 60
-    assert len(by_name["score"]) == 60
+    assert len(by_name["example_run"]) == 600
+    assert len(by_name["llm_call"]) == 600
+    assert len(by_name["score"]) == 600
 
     suite_span = by_name["suite_run"][0]
     suite_ctx = suite_span.context
@@ -88,4 +88,4 @@ def test_suite_run_attributes(fresh_db, trace_handle) -> None:
     attrs = dict(suite_spans[0].attributes)
     assert attrs["suite_name"] == "core_v1"
     assert attrs["model_version"] == "fake-large"
-    assert attrs["n_examples"] == 10
+    assert attrs["n_examples"] == 100

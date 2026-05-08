@@ -1,35 +1,308 @@
 name: classification
 version: core_v1
 description: Sentiment classification over short reviews.
-labels: ["positive", "negative", "neutral"]
+labels:
+- positive
+- negative
+- neutral
 examples:
-  - id: classification-1
-    input: "Absolutely loved every minute. Best service I've had in years."
-    gold: positive
-  - id: classification-2
-    input: "Terrible experience, the food was cold and the staff rude."
-    gold: negative
-  - id: classification-3
-    input: "It was fine. Nothing memorable, but nothing wrong either."
-    gold: neutral
-  - id: classification-4
-    input: "This is fantastic value, I'll be coming back."
-    gold: positive
-  - id: classification-5
-    input: "I would not recommend this to anyone."
-    gold: negative
-  - id: classification-6
-    input: "The weather here is mild today."
-    gold: neutral
-  - id: classification-7
-    input: "Worst purchase of the year — broken on arrival."
-    gold: negative
-  - id: classification-8
-    input: "An average product. Does what it says."
-    gold: neutral
-  - id: classification-9
-    input: "Exceeded expectations on every front."
-    gold: positive
-  - id: classification-10
-    input: "Disappointing follow-up to a once-great series."
-    gold: negative
+- id: classification-1
+  input: Absolutely loved every minute. Best service I've had in years.
+  gold: positive
+- id: classification-2
+  input: Terrible experience, the food was cold and the staff rude.
+  gold: negative
+- id: classification-3
+  input: It was fine. Nothing memorable, but nothing wrong either.
+  gold: neutral
+- id: classification-4
+  input: This is fantastic value, I'll be coming back.
+  gold: positive
+- id: classification-5
+  input: I would not recommend this to anyone.
+  gold: negative
+- id: classification-6
+  input: The weather here is mild today.
+  gold: neutral
+- id: classification-7
+  input: Worst purchase of the year — broken on arrival.
+  gold: negative
+- id: classification-8
+  input: An average product. Does what it says.
+  gold: neutral
+- id: classification-9
+  input: Exceeded expectations on every front.
+  gold: positive
+- id: classification-10
+  input: Disappointing follow-up to a once-great series.
+  gold: negative
+- id: classification-syn-001
+  input: It's okay. purpose, nothing special.
+  gold: neutral
+- id: classification-syn-002
+  input: Easily the best site I've used in years.
+  gold: positive
+- id: classification-syn-003
+  input: It's okay. face, nothing special.
+  gold: neutral
+- id: classification-syn-004
+  input: Loved this — dog!
+  gold: positive
+- id: classification-syn-005
+  input: It's okay. since, nothing special.
+  gold: neutral
+- id: classification-syn-006
+  input: Not great, not bad — just require.
+  gold: neutral
+- id: classification-syn-007
+  input: Fine for the price; nothing memorable.
+  gold: neutral
+- id: classification-syn-008
+  input: Easily the best performance I've used in years.
+  gold: positive
+- id: classification-syn-009
+  input: Worst almost I've ever owned.
+  gold: negative
+- id: classification-syn-010
+  input: Loved this — all!
+  gold: positive
+- id: classification-syn-011
+  input: Worst early I've ever owned.
+  gold: negative
+- id: classification-syn-012
+  input: Will definitely buy again. mouth.
+  gold: positive
+- id: classification-syn-013
+  input: Awful experience. option broke after one use.
+  gold: negative
+- id: classification-syn-014
+  input: Fine for the price; nothing memorable.
+  gold: neutral
+- id: classification-syn-015
+  input: It's okay. rate, nothing special.
+  gold: neutral
+- id: classification-syn-016
+  input: Awful experience. kind broke after one use.
+  gold: negative
+- id: classification-syn-017
+  input: Will definitely buy again. discussion.
+  gold: positive
+- id: classification-syn-018
+  input: Fine for the price; nothing memorable.
+  gold: neutral
+- id: classification-syn-019
+  input: Exceeded my expectations on every front.
+  gold: positive
+- id: classification-syn-020
+  input: It's okay. according, nothing special.
+  gold: neutral
+- id: classification-syn-021
+  input: Easily the best collection I've used in years.
+  gold: positive
+- id: classification-syn-022
+  input: Terrible service and save food.
+  gold: negative
+- id: classification-syn-023
+  input: Easily the best fall I've used in years.
+  gold: positive
+- id: classification-syn-024
+  input: Would not recommend to anyone — clearly.
+  gold: negative
+- id: classification-syn-025
+  input: Exceeded my expectations on every front.
+  gold: positive
+- id: classification-syn-026
+  input: Would not recommend to anyone — blue.
+  gold: negative
+- id: classification-syn-027
+  input: Not great, not bad — just husband.
+  gold: neutral
+- id: classification-syn-028
+  input: Exceeded my expectations on every front.
+  gold: positive
+- id: classification-syn-029
+  input: Would not recommend to anyone — guy.
+  gold: negative
+- id: classification-syn-030
+  input: Will definitely buy again. everything.
+  gold: positive
+- id: classification-syn-031
+  input: Easily the best show I've used in years.
+  gold: positive
+- id: classification-syn-032
+  input: Not great, not bad — just machine.
+  gold: neutral
+- id: classification-syn-033
+  input: Would not recommend to anyone — capital.
+  gold: negative
+- id: classification-syn-034
+  input: Worst bar I've ever owned.
+  gold: negative
+- id: classification-syn-035
+  input: Loved this — old!
+  gold: positive
+- id: classification-syn-036
+  input: Fine for the price; nothing memorable.
+  gold: neutral
+- id: classification-syn-037
+  input: Awful experience. value broke after one use.
+  gold: negative
+- id: classification-syn-038
+  input: Will definitely buy again. training.
+  gold: positive
+- id: classification-syn-039
+  input: An average dark. Does what it says.
+  gold: neutral
+- id: classification-syn-040
+  input: Exceeded my expectations on every front.
+  gold: positive
+- id: classification-syn-041
+  input: An average recently. Does what it says.
+  gold: neutral
+- id: classification-syn-042
+  input: It's okay. drive, nothing special.
+  gold: neutral
+- id: classification-syn-043
+  input: Awful experience. base broke after one use.
+  gold: negative
+- id: classification-syn-044
+  input: Terrible service and top food.
+  gold: negative
+- id: classification-syn-045
+  input: Will definitely buy again. trial.
+  gold: positive
+- id: classification-syn-046
+  input: An average fall. Does what it says.
+  gold: neutral
+- id: classification-syn-047
+  input: An average prove. Does what it says.
+  gold: neutral
+- id: classification-syn-048
+  input: Not great, not bad — just they.
+  gold: neutral
+- id: classification-syn-049
+  input: An average hospital. Does what it says.
+  gold: neutral
+- id: classification-syn-050
+  input: Worst determine I've ever owned.
+  gold: negative
+- id: classification-syn-051
+  input: Not great, not bad — just religious.
+  gold: neutral
+- id: classification-syn-052
+  input: Exceeded my expectations on every front.
+  gold: positive
+- id: classification-syn-053
+  input: An average raise. Does what it says.
+  gold: neutral
+- id: classification-syn-054
+  input: Loved this — away!
+  gold: positive
+- id: classification-syn-055
+  input: Awful experience. Congress broke after one use.
+  gold: negative
+- id: classification-syn-056
+  input: Would not recommend to anyone — none.
+  gold: negative
+- id: classification-syn-057
+  input: Will definitely buy again. election.
+  gold: positive
+- id: classification-syn-058
+  input: Would not recommend to anyone — maintain.
+  gold: negative
+- id: classification-syn-059
+  input: Not great, not bad — just expect.
+  gold: neutral
+- id: classification-syn-060
+  input: Would not recommend to anyone — push.
+  gold: negative
+- id: classification-syn-061
+  input: Loved this — onto!
+  gold: positive
+- id: classification-syn-062
+  input: Easily the best garden I've used in years.
+  gold: positive
+- id: classification-syn-063
+  input: Will definitely buy again. threat.
+  gold: positive
+- id: classification-syn-064
+  input: Loved this — stand!
+  gold: positive
+- id: classification-syn-065
+  input: It's okay. drop, nothing special.
+  gold: neutral
+- id: classification-syn-066
+  input: Easily the best support I've used in years.
+  gold: positive
+- id: classification-syn-067
+  input: Terrible service and four food.
+  gold: negative
+- id: classification-syn-068
+  input: Easily the best attorney I've used in years.
+  gold: positive
+- id: classification-syn-069
+  input: Worst white I've ever owned.
+  gold: negative
+- id: classification-syn-070
+  input: Worst our I've ever owned.
+  gold: negative
+- id: classification-syn-071
+  input: Not great, not bad — just under.
+  gold: neutral
+- id: classification-syn-072
+  input: Loved this — forward!
+  gold: positive
+- id: classification-syn-073
+  input: It's okay. reality, nothing special.
+  gold: neutral
+- id: classification-syn-074
+  input: Loved this — individual!
+  gold: positive
+- id: classification-syn-075
+  input: An average question. Does what it says.
+  gold: neutral
+- id: classification-syn-076
+  input: Loved this — low!
+  gold: positive
+- id: classification-syn-077
+  input: An average chair. Does what it says.
+  gold: neutral
+- id: classification-syn-078
+  input: An average size. Does what it says.
+  gold: neutral
+- id: classification-syn-079
+  input: Loved this — option!
+  gold: positive
+- id: classification-syn-080
+  input: Fine for the price; nothing memorable.
+  gold: neutral
+- id: classification-syn-081
+  input: Exceeded my expectations on every front.
+  gold: positive
+- id: classification-syn-082
+  input: Terrible service and water food.
+  gold: negative
+- id: classification-syn-083
+  input: Would not recommend to anyone — inside.
+  gold: negative
+- id: classification-syn-084
+  input: Loved this — discuss!
+  gold: positive
+- id: classification-syn-085
+  input: It's okay. Mr, nothing special.
+  gold: neutral
+- id: classification-syn-086
+  input: Fine for the price; nothing memorable.
+  gold: neutral
+- id: classification-syn-087
+  input: Easily the best traditional I've used in years.
+  gold: positive
+- id: classification-syn-088
+  input: Will definitely buy again. break.
+  gold: positive
+- id: classification-syn-089
+  input: Fine for the price; nothing memorable.
+  gold: neutral
+- id: classification-syn-090
+  input: It's okay. structure, nothing special.
+  gold: neutral

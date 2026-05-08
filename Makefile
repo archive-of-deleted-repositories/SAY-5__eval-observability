@@ -1,4 +1,4 @@
-.PHONY: dev migrate seed test test-cov lint typecheck eval eval-smoke cron-daily report-list up down clean format
+.PHONY: dev migrate seed test test-cov lint typecheck eval eval-smoke cron-daily report-list up down clean format synth bench-regress
 
 PY ?= poetry run
 
@@ -33,6 +33,12 @@ eval:
 
 eval-smoke:
 	$(PY) eval-obs run --suite core_v1 --provider fake --model fake-large --smoke
+
+synth:
+	$(PY) python -m eval.synth.synthesize
+
+bench-regress:
+	$(PY) python -m scripts.bench_regress
 
 cron-daily:
 	$(PY) eval-obs cron daily --suite core_v1 --model fake-large
