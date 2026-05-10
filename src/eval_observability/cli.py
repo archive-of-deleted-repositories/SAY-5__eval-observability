@@ -13,6 +13,7 @@ from rich.table import Table
 from sqlalchemy import desc, select
 
 from . import __version__
+from .alerts import build_destinations
 from .db import create_all, session_scope
 from .models import DailyReport, RegressionAlert, Run, Suite
 from .obs.logs import configure_logging, get_logger
@@ -155,6 +156,7 @@ def cron_daily(suite: str, model: str, now: str | None) -> None:
     settings = get_settings()
     create_all()
     when = datetime.fromisoformat(now) if now else None
+    destinations = build_destinations(settings.alerts)
     with session_scope() as session:
         report = generate_daily_report(
             session,
@@ -163,6 +165,7 @@ def cron_daily(suite: str, model: str, now: str | None) -> None:
             model_version=model,
             now=when,
             settings=settings,
+            alert_destinations=destinations,
         )
         click.echo(f"report id={report.id} path={report.file_path}")
 

@@ -96,6 +96,35 @@ eval-obs report list --since 7d
 
 A real committed report from a synthetic two-week scenario lives in [`reports/2026-05-07-core_v1-fake-large.md`](reports/2026-05-07-core_v1-fake-large.md). The summarization category is flagged because the mean dropped from 0.6188 → 0.3925 (delta = -22.63pp, p = 0.0059, well below the 0.05 threshold).
 
+## Alert routing
+
+When the cron flags a regression, it fans the event out to every configured destination via `eval_observability.alerts.dispatch_alerts`. Each destination implements a single `AlertDestination` Protocol (`send(alert) -> None`), so new sinks are added without subclassing.
+
+Built-in destinations:
+
+| `kind`       | Class                    | Required keys              |
+|--------------|--------------------------|----------------------------|
+| `log_only`   | `LogOnlyDestination`     | —                          |
+| `slack`      | `SlackDestination`       | `webhook_url`              |
+| `pagerduty`  | `PagerDutyDestination`   | `integration_key`          |
+| `opsgenie`   | `OpsgenieDestination`    | `api_key`                  |
+| `webhook`    | `WebhookDestination`     | `url` (optional `headers`) |
+
+Config block (Settings or YAML — list of mappings):
+
+```yaml
+alerts:
+  - kind: pagerduty
+    integration_key: "..."
+  - kind: webhook
+    url: "https://example.com/hook"
+    headers: {X-Token: "secret"}
+  - kind: slack
+    webhook_url: "https://hooks.slack.com/services/T/B/X"
+```
+
+`build_destinations(config)` materializes the list; if the list is empty or `None`, the cron falls back to a single `LogOnlyDestination` (prints to stdout). Every destination is called exactly once per alert. A destination that raises is logged at warning level and isolated — downstream destinations still receive the event. The per-destination outcome is recorded in `DailyReport.summary["alert_dispatch"]` for postmortem.
+
 ## What this is *not*
 
 - **Not a Next.js dashboard.** CLI-first by design. For the dashboard variant, see [`SAY-5/genai-eval`](https://github.com/SAY-5/genai-eval).

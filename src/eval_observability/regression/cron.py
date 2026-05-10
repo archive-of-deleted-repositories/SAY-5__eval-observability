@@ -9,6 +9,13 @@ from typing import Any
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from ..alerts import (
+    Alert,
+    AlertDestination,
+    DispatchResult,
+    LogOnlyDestination,
+    dispatch_alerts,
+)
 from ..models import DailyReport, RegressionAlert, Run, RunItem, Suite
 from ..settings import Settings, get_settings
 from .stats import welch_t_test
@@ -56,10 +63,14 @@ def generate_daily_report(
     model_version: str,
     now: datetime | None = None,
     settings: Settings | None = None,
+    alert_destinations: list[AlertDestination] | None = None,
 ) -> DailyReport:
     """Generate (or return the existing) DailyReport for ``date(now)``.
 
-    Idempotent on ``(suite, model_version, date)``.
+    Idempotent on ``(suite, model_version, date)``. Newly inserted
+    :class:`RegressionAlert` rows are fanned out to every configured alert
+    destination via :func:`alerts.dispatch_alerts`. When the report for
+    ``(suite, model, date)`` already exists, alerts are *not* re-fired.
     """
     settings = settings or get_settings()
     now = now or datetime.now(UTC)
@@ -164,11 +175,34 @@ def generate_daily_report(
     )
     file_path.write_text("\n".join(md_parts))
 
+    dispatch_results: list[DispatchResult] = []
+    if flagged:
+        destinations = alert_destinations or [LogOnlyDestination()]
+        outbound = [
+            Alert(
+                suite_name=suite_name,
+                suite_version=suite_version,
+                model_version=model_version,
+                category=a.category,
+                delta=a.delta,
+                p_value=a.p_value,
+                current_mean=a.current_mean,
+                prior_mean=a.prior_mean,
+                detected_at=now.isoformat(),
+            )
+            for a in flagged
+        ]
+        dispatch_results = dispatch_alerts(outbound, destinations)
+
     summary = {
         "rows": rows,
         "flagged_count": len(flagged),
         "current_window_start": current_start.isoformat(),
         "prior_window_start": prior_start.isoformat(),
+        "alert_dispatch": [
+            {"destination": r.destination, "ok": r.ok, "error": r.error}
+            for r in dispatch_results
+        ],
     }
     report = DailyReport(
         suite_id=suite.id,

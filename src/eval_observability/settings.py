@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -35,6 +36,13 @@ class Settings(BaseSettings):
     )
     regression_p_threshold: float = Field(
         default=0.05, description="p-value upper bound for Welch's t-test to flag as regression."
+    )
+    alerts: list[dict[str, Any]] = Field(
+        default_factory=list,
+        description=(
+            "Alert destinations as a list of {kind, ...} mappings. Set via "
+            "EVAL_OBS_ALERTS as a JSON string. Empty list = LogOnlyDestination."
+        ),
     )
 
 
