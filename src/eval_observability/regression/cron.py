@@ -200,8 +200,7 @@ def generate_daily_report(
         "current_window_start": current_start.isoformat(),
         "prior_window_start": prior_start.isoformat(),
         "alert_dispatch": [
-            {"destination": r.destination, "ok": r.ok, "error": r.error}
-            for r in dispatch_results
+            {"destination": r.destination, "ok": r.ok, "error": r.error} for r in dispatch_results
         ],
     }
     report = DailyReport(
